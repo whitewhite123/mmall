@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/mvc
+                        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--获取数据源-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql:///mmall"/>
+        <property name="username" value="root"/>
+        <property name="password" value="msj"/>
+    </bean>
+
+    <!--SqlSessionFactoryBean-->
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--连接数据库-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--引入xml映射文件-->
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:mapper/UserMapper.xml</value>
+                <value>classpath:mapper/ProductMapper.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--扫包-->
+    <context:component-scan base-package="com.msj"/>
+
+    <!--扫mapper映射包-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.msj.mapper"/>
+    </bean>
+
+
+    <!--开启注解-->
+    <mvc:annotation-driven/>
+
+
+</beans>
