@@ -76,54 +76,61 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectForCheck" resultMap="BaseResultMap">
-    select * from mmall_user where username = #{str}
-  </select>
 
-  <select id="getQuestion" resultMap="BaseResultMap">
-    select question from mmall_user where username=#{username};
-  </select>
-
-  <select id="checkAnswer" resultMap="BaseResultMap">
-    select answer from mmall_user where username=#{username} and question=#{question}
-  </select>
-
-  <update id="updatePassword">
-    update mmall_user set password=#{password}
-    where username=#{username}
-  </update>
-
-  <update id="updateInformation">
-    update mmall_user
-    <set>
-      <if test="email!=null">
-        email=#{email},
-      </if>
-      <if test="phone!=null">
-        phone=#{phone},
-      </if>
-      <if test="question!=null">
-        question=#{quesion},
-      </if>
-      <if test="answer!=null">
-        answer=#{answer}
-      </if>
-      <if test="updateTime!=null">
-        update_time=#{updateTime}
-      </if>
-    </set>
-    where id=#{id}
-  </update>
-
-  <select id="selectByName" resultMap="BaseResultMap">
+    <!--门户-->
+    <select id="selectByName" resultMap="BaseResultMap">
     select <include refid="Login_List"/> from mmall_user
     where username = #{username}
   </select>
 
-  <select id="selectForRegister" resultMap="BaseResultMap">
+    <select id="selectForRegister" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/> from mmall_user
     where username=#{username} and password=#{password} and email=#{email} and
     phone=#{phone} and question=#{question} and answer=#{answer}
   </select>
 
+    <select id="selectForCheck" resultMap="BaseResultMap">
+    select * from mmall_user where username = #{str}
+  </select>
+
+    <select id="getQuestion" resultMap="BaseResultMap">
+    select question from mmall_user where username=#{username};
+  </select>
+
+    <select id="checkAnswer" resultMap="BaseResultMap">
+    select answer from mmall_user where username=#{username} and question=#{question}
+  </select>
+
+    <update id="updatePassword">
+    update mmall_user set password=#{password}
+    where username=#{username}
+  </update>
+
+    <update id="updateInformation">
+        update mmall_user
+        <set>
+            <if test="email!=null">
+                email=#{email},
+            </if>
+            <if test="phone!=null">
+                phone=#{phone},
+            </if>
+            <if test="question!=null">
+                question=#{quesion},
+            </if>
+            <if test="answer!=null">
+                answer=#{answer}
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!--后台-->
+    <select id="selectUserList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from mmall_user
+        where role = 0;
+    </select>
 </mapper>

@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
+//    门户
     public User getLogin(String username, String password) {
         return userMapper.selectByName(username, password);
     }
@@ -20,7 +22,6 @@ public class UserServiceImpl implements UserService{
     public User getRegister(User user) {
         return userMapper.selectForRegister(user);
     }
-
 
     public User getCheck(String str, String type) {
         if("username".equals(type)){
@@ -45,5 +46,8 @@ public class UserServiceImpl implements UserService{
         return userMapper.updateInformation(user);
     }
 
-
+//后台
+    public List<User> getUserList(){
+        return userMapper.selectUserList();
+    }
 }
