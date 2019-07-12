@@ -25,9 +25,9 @@ public class UserController {
     @ResponseBody
     public ServerResponse login(@Param("username") String username,
                                 @Param("password") String password, HttpSession session) {
-        User user = userService.selectByName(username, password);
+        User user = userService.getLogin(username,password);
         //如果取得出来user，证明已经被注册过了的，登录成功，否则登录失败
-        if (user != null) {
+        if (user!= null) {
             session.setAttribute("user",user);
             return ServerResponse.createSuccess(user);
         }
@@ -37,12 +37,10 @@ public class UserController {
     //2、注册
     @RequestMapping("/register.do")
     @ResponseBody
-    public ServerResponse register(@Param("username")String username,@Param("password")String password,
-                                   @Param("email")String email,@Param("phone")String phone,
-                                   @Param("question")String question,@Param("answer")String answer){
-        User user = userService.selectForRegister(username, password, email, phone, question, answer);
+    public ServerResponse register(User user){
+        User userList = userService.getRegister(user);
         //如果取得出来user，证明已经注册过了，注册失败，否则注册成功
-        if(user!=null){
+        if(userList!=null){
             return ServerResponse.createErrorByMessage(Const.REGISTER_ERROR_MESSAGE);
         }
         return  ServerResponse.createSuccessByMessage(Const.REGISTER_SUCCESS_MESSAGE);
@@ -52,7 +50,7 @@ public class UserController {
     @RequestMapping("/check_valid.do")
     @ResponseBody
     public ServerResponse checkValid(@Param("str") String str,@Param("type") String type){
-        User user = userService.selectForCheck(str,type);
+        User user = userService.getCheck(str,type);
         //如果取得出来user，证明已经注册过了
         if(user!=null){
             return ServerResponse.createErrorByMessage(Const.REGISTER_ERROR_MESSAGE);
@@ -85,10 +83,9 @@ public class UserController {
     //6、提交问题答案
     @RequestMapping("/forget_check_answer.do")
     @ResponseBody
-    public ServerResponse forgetCheckAnswer(@Param("username")String username,
-                                            @Param("question")String question,
+    public ServerResponse forgetCheckAnswer(@Param("username")String username,@Param("question")String question,
                                             @Param("answer")String answer,HttpSession session){
-        User user = userService.checkAnswer(username, question);
+        User user = userService.getAnswer(username, question);
         if(user!=null){
             if((user.getAnswer()).equals(answer)){
                 ServerResponse serverResponse = ServerResponse.createSuccessByMessage(Const.CHECKANSWER_SUCCESS);
@@ -106,7 +103,7 @@ public class UserController {
     public ServerResponse forgetResetPassword(String username,String passwordNew,String forgetToken,HttpSession session){
         System.out.println(session.getAttribute("forgetToken"));
         if((session.getAttribute("forgetToken")).equals(forgetToken)){
-            Integer num = userService.updatePassword(username, passwordNew);
+            Integer num = userService.getUpdatePassword(username, passwordNew);
             if(num>0){
                 return ServerResponse.createSuccessByMessage(Const.UPDATE_PASSWORD_SUCCESS);
             }
@@ -122,7 +119,7 @@ public class UserController {
         String password = user.getPassword();
         String username = user.getUsername();
         if(passwordOld.equals(password)){
-            Integer num = userService.updatePassword(username, passwordNew);
+            Integer num = userService.getUpdatePassword(username, passwordNew);
             if(num>0){
                 return ServerResponse.createSuccessByMessage(Const.UPDATE_PASSWORD_SUCCESS);
             }
@@ -133,21 +130,12 @@ public class UserController {
     //9、登录状态更新个人信息
     @RequestMapping("/update_information.do")
     @ResponseBody
-    public ServerResponse updateInformation(@Param("email") String email,@Param("phone") String phone,
-                                            @Param("question")String question,@Param("answer")String answer,
-                                            HttpSession session){
+    public ServerResponse updateInformation(HttpSession session){
         //如果session取出来不为空，就进行判断，为空说明未登录
-        User user = (User)session.getAttribute("user");
-        if(user!=null){
-            Integer id = user.getId();
-            User user1 = new User();
-            user1.setId(id);
-            user1.setEmail(email);
-            user1.setPhone(phone);
-            user1.setQuestion(question);
-            user1.setAnswer(answer);
-            user1.setUpdateTime(new Date());
-            Integer num = userService.updateInformation(user1);
+        User userList = (User)session.getAttribute("user");
+        if(userList!=null){
+            userList.setUpdateTime(new Date());
+            Integer num = userService.getUpdateInformation(userList);
             if(num>0){
                 return ServerResponse.createSuccessByMessage(Const.UPDATE_INFORMATION_SUCCESS);
             }
@@ -156,7 +144,7 @@ public class UserController {
     }
 
 
-    //10、退出登录
+    //10、退出登录，设置session值为空
     @RequestMapping("/logout.do")
     @ResponseBody
     public ServerResponse logout(HttpSession session){
@@ -165,7 +153,6 @@ public class UserController {
             return ServerResponse.createSuccessByMessage(Const.LOGOUT_SUCCESS);
         }
         return ServerResponse.createErrorByMessage(Const.LOGOUT_ERROR);
-
     }
 
 }

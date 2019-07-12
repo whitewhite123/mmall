@@ -6,21 +6,23 @@ import com.msj.service.portal.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+
 @Service
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
-    public User selectByName(String username, String password) {
-        return userMapper.selectByName(username,password);
+    public User getLogin(String username, String password) {
+        return userMapper.selectByName(username, password);
     }
 
-    public User selectForRegister(String username, String password, String email, String phone, String question, String answer) {
-        return userMapper.selectForRegister(username,password,email,phone,question,answer);
+    public User getRegister(User user) {
+        return userMapper.selectForRegister(user);
     }
 
 
-    public User selectForCheck(String str, String type) {
+    public User getCheck(String str, String type) {
         if("username".equals(type)){
             return userMapper.selectForCheck(str);
         }
@@ -31,15 +33,15 @@ public class UserServiceImpl implements UserService{
         return userMapper.getQuestion(username);
     }
 
-    public User checkAnswer(String username, String question) {
+    public User getAnswer(String username, String question) {
         return userMapper.checkAnswer(username,question);
     }
 
-    public Integer updatePassword(String username, String password) {
+    public Integer getUpdatePassword(String username, String password) {
        return userMapper.updatePassword(username,password);
     }
 
-    public Integer updateInformation(User user) {
+    public Integer getUpdateInformation(User user) {
         return userMapper.updateInformation(user);
     }
 

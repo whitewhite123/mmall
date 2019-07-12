@@ -16,6 +16,9 @@
   <sql id="Base_Column_List" >
     id, username, password, email, phone, question, answer, role, create_time, update_time
   </sql>
+  <sql id="Login_List" >
+    id,username,password,email,role,phone,create_time,update_time
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -73,16 +76,6 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectByName" resultMap="BaseResultMap">
-    select id,username,password,email,phone,create_time,update_time from mmall_user
-    where username = #{username}
-  </select>
-
-  <select id="selectForRegister" resultMap="BaseResultMap">
-    select * from mmall_user where username=#{username} and password=#{password} and email=#{email} and
-    phone=#{phone} and question=#{question} and answer=#{answer}
-  </select>
-
   <select id="selectForCheck" resultMap="BaseResultMap">
     select * from mmall_user where username = #{str}
   </select>
@@ -121,4 +114,16 @@
     </set>
     where id=#{id}
   </update>
+
+  <select id="selectByName" resultMap="BaseResultMap">
+    select <include refid="Login_List"/> from mmall_user
+    where username = #{username}
+  </select>
+
+  <select id="selectForRegister" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from mmall_user
+    where username=#{username} and password=#{password} and email=#{email} and
+    phone=#{phone} and question=#{question} and answer=#{answer}
+  </select>
+
 </mapper>
