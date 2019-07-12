@@ -56,13 +56,10 @@ public class UserManageController {
                                HttpSession session){
         User user = (User)session.getAttribute("user");
         if(user!=null){
-            if(pageNum instanceof Integer && pageSize instanceof Integer){
-                PageHelper.startPage(pageNum,pageNum);
-                List<User> userList = userService.getUserList();
-                PageInfo<User> pageInfo = new PageInfo<User>(userList);
-                return ServerResponse.createSuccess(pageInfo);
-            }
-            return ServerResponse.createErrorByMessage(ManageConst.GETLIST_ERROR);
+            PageHelper.startPage(pageNum,pageNum);
+            List<User> userList = userService.getUserList();
+            PageInfo<User> pageInfo = new PageInfo<User>(userList);
+            return ServerResponse.createSuccess(pageInfo);
         }
         return ServerResponse.createErrorByMessage(ManageConst.GETLIST_ERROR);
     }

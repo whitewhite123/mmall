@@ -1,5 +1,6 @@
 package com.msj.controller.portal;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.msj.common.Const;
 import com.msj.common.ServerResponse;
@@ -34,8 +35,10 @@ public class ProductController {
                                @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize,
                                @RequestParam(value = "orderBy",defaultValue = "") String orderBy){
         //todo 根据categoryId查询
-        PageInfo<Product> products = productService.getProductList(pageNum,pageSize);
-        return ServerResponse.createSuccess(products);
+        PageHelper.startPage(pageNum,pageSize);
+        List<Product> productList = productService.getProductList();
+        PageInfo<Product> productPageInfo = new PageInfo<Product>(productList);
+        return ServerResponse.createSuccess(productPageInfo);
     }
 
     /**

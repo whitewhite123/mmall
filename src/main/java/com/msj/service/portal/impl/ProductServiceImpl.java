@@ -20,12 +20,8 @@ public class ProductServiceImpl implements ProductService{
         return productMapper.selectByPrimaryKey(id);
     }
 
-    public PageInfo<Product> getProductList(Integer pageNum,Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<Product> products = productMapper.selectAll();
-        PageInfo<Product> productPageInfo = new PageInfo<Product>(products);
-        System.out.println(productPageInfo);
-        return productPageInfo;
+    public List<Product> getProductList() {
+        return productMapper.selectAll();
     }
 
 
