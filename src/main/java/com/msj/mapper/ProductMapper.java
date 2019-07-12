@@ -3,6 +3,8 @@ package com.msj.mapper;
 import com.msj.pojo.Product;
 import com.msj.pojo.ProductWithBLOBs;
 
+import java.util.List;
+
 public interface ProductMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -13,6 +15,8 @@ public interface ProductMapper {
     int updateByPrimaryKey(Product record);
 
     Product selectByPrimaryKey(Integer id);
+
+    List<Product> selectAll();
 
 
 

@@ -24,8 +24,11 @@
     sub_images, detail
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
-      select * from mmall_product where id=#{id}
+       select
+       <include refid="Base_Column_List"/>
+       from mmall_product where id=#{id}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from mmall_product
     where id = #{id,jdbcType=INTEGER}
@@ -97,4 +100,10 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+     select
+     <include refid="Base_Column_List"/>
+     from mmall_product
+  </select>
 </mapper>
