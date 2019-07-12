@@ -1,5 +1,6 @@
 package com.msj.controller.portal;
 
+import com.msj.common.Const;
 import com.msj.common.ResponseCode;
 import com.msj.common.ServerResponse;
 import com.msj.pojo.User;
@@ -28,9 +29,9 @@ public class UserController {
         //如果取得出来user，证明已经被注册过了的，登录成功，否则登录失败
         if (user != null) {
             session.setAttribute("user",user);
-            return ServerResponse.createBySuccess(user);
+            return ServerResponse.createSuccess(user);
         }
-        return ServerResponse.createByFailMessage();
+        return ServerResponse.createErrorByCodeMessage(ResponseCode.LOGIN_ERROR.getCode(),ResponseCode.LOGIN_ERROR.getDesc());
     }
 
     //2、注册
@@ -42,9 +43,9 @@ public class UserController {
         User user = userService.selectForRegister(username, password, email, phone, question, answer);
         //如果取得出来user，证明已经注册过了，注册失败，否则注册成功
         if(user!=null){
-            return ServerResponse.registerByFail();
+            return ServerResponse.createErrorByMessage(Const.REGISTER_ERROR_MESSAGE);
         }
-        return  ServerResponse.registerBySuccess();
+        return  ServerResponse.createSuccessByMessage(Const.REGISTER_SUCCESS_MESSAGE);
     }
 
     //3、检查用户名是否有效
@@ -54,9 +55,9 @@ public class UserController {
         User user = userService.selectForCheck(str,type);
         //如果取得出来user，证明已经注册过了
         if(user!=null){
-            return ServerResponse.registerByFail();
+            return ServerResponse.createErrorByMessage(Const.REGISTER_ERROR_MESSAGE);
         }
-        return ServerResponse.registerBySuccess();
+        return ServerResponse.createSuccessByMessage(Const.REGISTER_SUCCESS_MESSAGE);
     }
 
     //4、获取用户信息
@@ -65,9 +66,9 @@ public class UserController {
     @ResponseBody
     public ServerResponse getUserInfo(HttpSession session){
         if(session.getAttribute("user")!=null){
-            return ServerResponse.loginBySuccess(session.getAttribute("user"));
+            return ServerResponse.createSuccess(session.getAttribute("user"));
         }
-        return ServerResponse.loginByFail();
+        return ServerResponse.createErrorByMessage(Const.GETINFORMATION_ERROR_MESSAGE);
     }
 
     //5、忘记密码
@@ -76,9 +77,9 @@ public class UserController {
     public ServerResponse forgetGetQuestion(String username){
         User question = userService.getQuestion(username);
         if(question!=null){
-            return ServerResponse.getQuestionSuccess();
+            return ServerResponse.createSuccess(Const.FORGETQUESTION_SUCCESS);
         }
-        return ServerResponse.getQuestionFail();
+        return ServerResponse.createErrorByMessage(Const.FORGETQUESTION_ERROR);
     }
 
     //6、提交问题答案
@@ -90,13 +91,13 @@ public class UserController {
         User user = userService.checkAnswer(username, question);
         if(user!=null){
             if((user.getAnswer()).equals(answer)){
-                ServerResponse serverResponse = ServerResponse.checkAnswerSuccess();
-                String msg = ServerResponse.checkAnswerSuccess().getMsg();
+                ServerResponse serverResponse = ServerResponse.createSuccessByMessage(Const.CHECKANSWER_SUCCESS);
+                String msg = ServerResponse.createSuccessByMessage(Const.CHECKANSWER_SUCCESS).getMsg();
                 session.setAttribute("forgetToken",msg);
                 return serverResponse;
             }
         }
-        return ServerResponse.checkAnswerFail();
+        return ServerResponse.createErrorByMessage(Const.CHECKEANSWER_ERROR);
     }
 
     //7、忘记密码重设密码
@@ -107,10 +108,10 @@ public class UserController {
         if((session.getAttribute("forgetToken")).equals(forgetToken)){
             Integer num = userService.updatePassword(username, passwordNew);
             if(num>0){
-                return ServerResponse.updatePasswordSuccess();
+                return ServerResponse.createSuccessByMessage(Const.UPDATE_PASSWORD_SUCCESS);
             }
         }
-        return ServerResponse.updatePasswordFail();
+        return ServerResponse.createErrorByMessage(Const.UPDATE_PASSWORD_ERROR);
     }
 
     //8、登录状态：重置密码
@@ -123,10 +124,10 @@ public class UserController {
         if(passwordOld.equals(password)){
             Integer num = userService.updatePassword(username, passwordNew);
             if(num>0){
-                return ServerResponse.updatePasswordSuccess();
+                return ServerResponse.createSuccessByMessage(Const.UPDATE_PASSWORD_SUCCESS);
             }
         }
-        return ServerResponse.updatePasswordFail2();
+        return ServerResponse.createErrorByMessage(Const.UPDATE_PASSWORD_ERROR2);
     }
 
     //9、登录状态更新个人信息
@@ -148,10 +149,10 @@ public class UserController {
             user1.setUpdateTime(new Date());
             Integer num = userService.updateInformation(user1);
             if(num>0){
-                return ServerResponse.updateInformationSuccess();
+                return ServerResponse.createSuccessByMessage(Const.UPDATE_INFORMATION_SUCCESS);
             }
         }
-        return ServerResponse.updateInformationFail();
+        return ServerResponse.createErrorByMessage(Const.UPDATE_INFORMATION_ERROR);
     }
 
 
@@ -161,9 +162,9 @@ public class UserController {
     public ServerResponse logout(HttpSession session){
         if(session.getAttribute("user")!=null){
             session.setAttribute("user",null);
-            return ServerResponse.logoutSuccess();
+            return ServerResponse.createSuccessByMessage(Const.LOGOUT_SUCCESS);
         }
-        return ServerResponse.logoutFail();
+        return ServerResponse.createErrorByMessage(Const.LOGOUT_ERROR);
 
     }
 

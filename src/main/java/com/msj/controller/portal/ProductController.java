@@ -1,6 +1,6 @@
 package com.msj.controller.portal;
 
-import com.msj.common.ProductServerResponse;
+import com.msj.common.Const;
 import com.msj.common.ServerResponse;
 import com.msj.pojo.Product;
 import com.msj.service.portal.ProductService;
@@ -17,11 +17,11 @@ public class ProductController {
 
     @RequestMapping("/detail.do")
     @ResponseBody
-    public ProductServerResponse detail(Integer productId){
+    public ServerResponse detail(Integer productId){
         Product product = productService.selectDetail(productId);
         if(product!=null){
-            return ProductServerResponse.productDetailSuccess(product);
+            return ServerResponse.createSuccess(product);
         }
-        return ProductServerResponse.productDetailFail();
+        return ServerResponse.createErrorByMessage(Const.PRODUCT_DETAIL_ERROR);
     }
 }
