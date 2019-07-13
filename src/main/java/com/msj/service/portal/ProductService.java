@@ -8,5 +8,5 @@ import java.util.List;
 public interface ProductService {
     Product selectDetail(Integer id);
     List<Product> getProductList();
-
+    Product getProductDetail(Integer id);
 }

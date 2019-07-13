@@ -24,5 +24,9 @@ public class ProductServiceImpl implements ProductService{
         return productMapper.selectAll();
     }
 
+    public Product getProductDetail(Integer id){
+        return productMapper.selectByPrimaryKey(id);
+    }
+
 
 }

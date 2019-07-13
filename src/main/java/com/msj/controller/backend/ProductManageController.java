@@ -44,4 +44,40 @@ public class ProductManageController {
         }
         return ServerResponse.createErrorByMessage(ManageConst.GETPRODUCT_ERROR);
     }
+
+    /**
+     * 产品搜素
+     * @param productName
+     * @param productId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping("/search.do")
+    @ResponseBody
+    public ServerResponse search(@RequestParam("productName")String productName,
+                                 @RequestParam("productId") Integer productId,
+                                 @RequestParam(value = "pageNum",defaultValue ="1")Integer pageNum,
+                                 @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize){
+        //todo 根据产品的productName和productId进行搜素
+        return null;
+    }
+
+    @RequestMapping("/upload.do")
+    @ResponseBody
+    public ServerResponse upload(){
+        //todo 图片上传
+        return null;
+    }
+
+    @RequestMapping("/detail.do")
+    @ResponseBody
+    public ServerResponse detail(Integer productId){
+        Product productDetail = productService.getProductDetail(productId);
+        if(productDetail!=null){
+            return ServerResponse.createSuccess(productDetail);
+        }
+        return ServerResponse.createErrorByMessage(ManageConst.GETLIST_ERROR);
+    }
+
 }
