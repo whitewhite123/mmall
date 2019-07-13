@@ -11,4 +11,7 @@ public interface ProductService {
     List<Product> getProductList();
     Product getProductDetail(Integer id);
     int editProductStatus(@Param("id") Integer id, @Param("status") Integer status);
+    Product getProductById(Integer id);
+    int addProduct(Product product);
+    int editProduct(Product product);
 }

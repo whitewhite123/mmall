@@ -9,6 +9,15 @@
     <result column="checked" property="checked" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <association property="product" column="productId" javaType="com.msj.pojo.Product">
+        <id property="id" column="pid" javaType="java.lang.Integer"/>
+        <result column="name" property="name" javaType="java.lang.String"/>
+        <result column="subtitle" property="subtitle" javaType="java.lang.String"/>
+        <result column="mainImage" property="mainImage" javaType="java.lang.String"/>
+        <result column="price" property="price" javaType="java.lang.Double"/>
+        <result column="status" property="status" javaType="java.lang.Integer"/>
+        <result column="stock" property="stock" javaType="java.lang.Integer"/>
+    </association>
   </resultMap>
   <sql id="Base_Column_List" >
     id, user_id, product_id, quantity, checked, create_time, update_time
@@ -57,4 +66,12 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectProductByUserId" resultMap="BaseResultMap">
+    select  c.id, c.user_id, c.product_id, c.quantity, c.checked, c.create_time, c.update_time,
+    p.name,p.subtitle,p.main_image,p.price,p.status,p.stock
+    from mmall_cart c
+    left join mmall_product p on p.id = c.product_id
+    where user_id = #{userId}
+  </select>
 </mapper>

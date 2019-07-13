@@ -15,4 +15,10 @@ public class ManageConst {
     public static final String UPDATE_STATUS_SUCCESS = "修改产品状态成功";
 
     public static final String UPDATE_STATUS_ERROR = "修改产品状态失败";
+
+    public static final String INSERT_PRODUCT_SUCCESS = "新增产品成功";
+
+    public static final String UPDATE_PRODUCT_SUCCESS = "更新产品成功";
+
+    public static final String UPDATE_PRODUCT_ERROT = "更新产品失败";
 }

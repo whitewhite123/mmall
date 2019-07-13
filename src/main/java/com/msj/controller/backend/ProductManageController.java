@@ -85,6 +85,12 @@ public class ProductManageController {
         return ServerResponse.createErrorByMessage(ManageConst.GETLIST_ERROR);
     }
 
+    /**
+     * 产品上下架
+     * @param productId
+     * @param status
+     * @return
+     */
     @RequestMapping("/set_sale_status.do")
     @ResponseBody
     public ServerResponse setStatus(Integer productId,Integer status){
@@ -93,6 +99,36 @@ public class ProductManageController {
             return ServerResponse.createSuccessByMessage(ManageConst.UPDATE_STATUS_SUCCESS);
         }
         return ServerResponse.createErrorByMessage(ManageConst.UPDATE_STATUS_ERROR);
+    }
+
+    /**
+     * 新增OR更新产品
+     * @param product
+     * @return
+     */
+    @RequestMapping("/save.do")
+    @ResponseBody
+    public ServerResponse save(Product product){
+        //todo 新增OR更新产品出错
+        Integer id = product.getId();
+        System.out.println(id);
+        Product pro = productService.getProductById(id);
+        System.out.println(pro);
+        if(pro!=null){
+            int num = productService.editProduct(pro);
+            System.out.println("更新"+num);
+            if(num>0){
+                return ServerResponse.createSuccessByMessage(ManageConst.UPDATE_STATUS_SUCCESS);
+            }
+        }
+        int num = productService.addProduct(product);
+        System.out.println("新增"+num);
+        if(num>0){
+            return ServerResponse.createSuccessByMessage(ManageConst.INSERT_PRODUCT_SUCCESS);
+        }
+        return ServerResponse.createErrorByMessage(ManageConst.UPDATE_STATUS_ERROR);
+
+
     }
 
 }

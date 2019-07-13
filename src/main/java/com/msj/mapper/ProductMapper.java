@@ -21,6 +21,9 @@ public interface ProductMapper {
 
     int updateProductStatus(@Param("id") Integer id, @Param("status") Integer status);
 
+    int insertProduct(Product product);
+
+    int updateProduct(Product product);
 
 
 

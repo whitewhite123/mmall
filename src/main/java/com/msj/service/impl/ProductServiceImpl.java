@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -28,6 +29,21 @@ public class ProductServiceImpl implements ProductService{
 
     public int editProductStatus(@Param("id") Integer id, @Param("status") Integer status){
         return productMapper.updateProductStatus(id,status);
+    }
+
+    public Product getProductById(Integer id){
+        return productMapper.selectByPrimaryKey(id);
+    }
+
+    public int addProduct(Product product){
+        product.setCreateTime(new Date());
+        product.setUpdateTime(new Date());
+        return productMapper.insertProduct(product);
+    }
+
+    public int editProduct(Product product){
+        product.setUpdateTime(new Date());
+        return productMapper.updateProduct(product);
     }
 
 

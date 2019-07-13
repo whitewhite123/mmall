@@ -27,6 +27,7 @@
             <list>
                 <value>classpath:mapper/UserMapper.xml</value>
                 <value>classpath:mapper/ProductMapper.xml</value>
+                <value>classpath:mapper/CartMapper.xml</value>
             </list>
         </property>
     </bean>

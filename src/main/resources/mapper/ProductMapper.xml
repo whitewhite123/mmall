@@ -111,4 +111,18 @@
      update mmall_product set status=#{status}
      where id=#{id}
   </update>
+
+
+  <insert id="insertProduct" parameterType="com.msj.pojo.Product">
+      insert into mmall_product(id,category_id, name, subtitle, main_image,sub_images, price, stock, status)
+      values(id=#{id},category_id=#{categoryId}, name=#{name}, subtitle=#{subtitle},
+      main_image=#{mainImage},sub_images=#{subImages},price={price}, stock=#{stock}, status=#{status})
+  </insert>
+
+  <update id="updateProduct" parameterType="com.msj.pojo.Product">
+      update mmall_product set category_id=#{categoryId}, name=#{name}, subtitle=#{subtitle},
+      main_image=#{mainImage},sub_images=#{subImages},price={price}, stock=#{stock}, status=#{status}
+      where id=#{id}
+  </update>
+
 </mapper>
