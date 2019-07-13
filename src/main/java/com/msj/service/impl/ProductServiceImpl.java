@@ -1,11 +1,9 @@
-package com.msj.service.portal.impl;
+package com.msj.service.impl;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.msj.mapper.ProductMapper;
 import com.msj.pojo.Product;
-import com.msj.service.portal.ProductService;
+import com.msj.service.ProductService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +24,10 @@ public class ProductServiceImpl implements ProductService{
 
     public Product getProductDetail(Integer id){
         return productMapper.selectByPrimaryKey(id);
+    }
+
+    public int editProductStatus(@Param("id") Integer id, @Param("status") Integer status){
+        return productMapper.updateProductStatus(id,status);
     }
 
 

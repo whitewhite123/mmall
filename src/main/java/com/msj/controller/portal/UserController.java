@@ -4,7 +4,7 @@ import com.msj.common.Const;
 import com.msj.common.ResponseCode;
 import com.msj.common.ServerResponse;
 import com.msj.pojo.User;
-import com.msj.service.portal.UserService;
+import com.msj.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

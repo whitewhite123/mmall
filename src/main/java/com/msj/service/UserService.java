@@ -1,4 +1,4 @@
-package com.msj.service.portal;
+package com.msj.service;
 
 import com.msj.pojo.User;
 import org.apache.ibatis.annotations.Param;

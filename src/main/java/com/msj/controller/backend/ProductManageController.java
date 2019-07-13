@@ -6,7 +6,7 @@ import com.msj.common.ManageConst;
 import com.msj.common.ServerResponse;
 import com.msj.pojo.Product;
 import com.msj.pojo.User;
-import com.msj.service.portal.ProductService;
+import com.msj.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,6 +70,11 @@ public class ProductManageController {
         return null;
     }
 
+    /**
+     * 产品详情
+     * @param productId
+     * @return
+     */
     @RequestMapping("/detail.do")
     @ResponseBody
     public ServerResponse detail(Integer productId){
@@ -78,6 +83,16 @@ public class ProductManageController {
             return ServerResponse.createSuccess(productDetail);
         }
         return ServerResponse.createErrorByMessage(ManageConst.GETLIST_ERROR);
+    }
+
+    @RequestMapping("/set_sale_status.do")
+    @ResponseBody
+    public ServerResponse setStatus(Integer productId,Integer status){
+        int num = productService.editProductStatus(productId, status);
+        if(num>0){
+            return ServerResponse.createSuccessByMessage(ManageConst.UPDATE_STATUS_SUCCESS);
+        }
+        return ServerResponse.createErrorByMessage(ManageConst.UPDATE_STATUS_ERROR);
     }
 
 }

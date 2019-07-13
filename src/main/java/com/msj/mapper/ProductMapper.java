@@ -2,6 +2,7 @@ package com.msj.mapper;
 
 import com.msj.pojo.Product;
 import com.msj.pojo.ProductWithBLOBs;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +18,9 @@ public interface ProductMapper {
     Product selectByPrimaryKey(Integer id);
 
     List<Product> selectAll();
+
+    int updateProductStatus(@Param("id") Integer id, @Param("status") Integer status);
+
 
 
 

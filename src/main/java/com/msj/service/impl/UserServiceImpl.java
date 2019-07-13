@@ -1,12 +1,11 @@
-package com.msj.service.portal.impl;
+package com.msj.service.impl;
 
 import com.msj.mapper.UserMapper;
 import com.msj.pojo.User;
-import com.msj.service.portal.UserService;
+import com.msj.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service

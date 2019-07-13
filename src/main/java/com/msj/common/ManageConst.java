@@ -11,4 +11,8 @@ public class ManageConst {
 
 //    产品接口
     public static final String GETPRODUCT_ERROR = "用户未登录,请登录";
+
+    public static final String UPDATE_STATUS_SUCCESS = "修改产品状态成功";
+
+    public static final String UPDATE_STATUS_ERROR = "修改产品状态失败";
 }
