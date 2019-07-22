@@ -108,8 +108,21 @@ public class UserServiceImpl implements UserService{
         }
         return ServerResponse.createByErrorMessage(Const.GETINFORMATION_ERROR_MESSAGE);
     }
-    public User getQuestion(String username) {
-        return userMapper.getQuestion(username);
+
+    //忘记密码--获取问题
+    public ServerResponse getQuestion(String username) {
+        User user = userMapper.getQuestion(username);
+        //判断用户是否存在
+        if(user!=null){
+            String question = user.getQuestion();
+            //判断问题是否为空
+            if(question.equals("")){
+                return ServerResponse.createByErrorMessage(Const.GETQUESTION_ERROR);//该用户未设置找回密码问题
+            }
+            return ServerResponse.createBySuccessMessage(Const.GETQUESTION_SUCCESS);//这里是问题
+        }
+        return ServerResponse.createByErrorMessage(Const.GETQUESTION_ILLEGAL);//该用户未注册
+
     }
 
     public User getAnswer(String username, String question) {

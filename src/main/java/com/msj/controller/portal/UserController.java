@@ -52,15 +52,12 @@ public class UserController {
         return userService.getUserInfo(session);
     }
 
-    //5、忘记密码
+    //5、忘记密码--获取问题
     @RequestMapping("/forget_get_question.do")
     @ResponseBody
     public ServerResponse forgetGetQuestion(String username){
-        User question = userService.getQuestion(username);
-        if(question!=null){
-            return ServerResponse.createSuccess(Const.FORGETQUESTION_SUCCESS);
-        }
-        return ServerResponse.createByErrorMessage(Const.FORGETQUESTION_ERROR);
+        return userService.getQuestion(username);
+
     }
 
     //6、提交问题答案

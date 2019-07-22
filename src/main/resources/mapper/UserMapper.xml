@@ -127,7 +127,7 @@
   </select>
 
     <select id="getQuestion" resultMap="BaseResultMap">
-    select question from mmall_user where username=#{username};
+    select <include refid="Base_Column_List"/> from mmall_user where username=#{username};
   </select>
 
     <select id="checkAnswer" resultMap="BaseResultMap">

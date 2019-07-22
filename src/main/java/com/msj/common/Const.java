@@ -18,8 +18,9 @@ public class Const {
 
     public static final String GETINFORMATION_ERROR_MESSAGE = "用户未登录,无法获取当前用户信息";
 
-    public static final String FORGETQUESTION_SUCCESS = "这里是问题";
-    public static final String FORGETQUESTION_ERROR = "该用户未设置找回密码问题";
+    public static final String GETQUESTION_SUCCESS = "这里是问题";
+    public static final String GETQUESTION_ERROR = "该用户未设置找回密码问题";
+    public static final String GETQUESTION_ILLEGAL = "该用户未注册";
 
     public static final String CHECKANSWER_SUCCESS = "531ef4b4-9663-4e6d-9a20-fb56367446a5";
     public static final String CHECKEANSWER_ERROR = "问题答案错误";

@@ -13,7 +13,7 @@ public interface UserService {
     ServerResponse Register(User user);
     ServerResponse checkValid(String str,String type);
     ServerResponse getUserInfo(HttpSession session);
-    User getQuestion(String username);
+    ServerResponse getQuestion(String username);
     User getAnswer(@Param("username")String username,@Param("question")String question);
     Integer getUpdatePassword(@Param("username")String username,@Param("password")String password);
     Integer getUpdateInformation(User user);
