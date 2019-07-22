@@ -83,4 +83,11 @@ public class ServerResponse {
             return new ServerResponse(status,msg);
     }
 
+    /**
+     * 判断是否成功
+     * @return
+     */
+    public boolean error(){
+        return this.status == Const.ERROR_CODE;
+    }
 }

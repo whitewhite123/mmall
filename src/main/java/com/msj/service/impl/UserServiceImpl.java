@@ -37,19 +37,40 @@ public class UserServiceImpl implements UserService{
     //注册
     public ServerResponse Register(User user) {
         String pwd = MD5Util.MD5EncodeUtf8(user.getPassword());//加密
-        User userOne = userMapper.selectIs(user);
-        //先进行查询，如果不为空，则注册过；如果查询为空，则未注册，新增一条数据
-        if(userOne == null){
-            user.setPassword(pwd);
-            user.setRole(0);
-            user.setCreateTime(new Date());
-            user.setUpdateTime(new Date());
-            Integer resultCount = userMapper.insertOne(user);
-            if(resultCount>0){
-                return ServerResponse.createByErrorMessage(Const.REGISTER_SUCCESS_MESSAGE);
-            }
+        user.setPassword(pwd);
+        System.out.println(user);
+        String usernameValue = user.getUsername();
+        String emailValue = user.getEmail();
+        String phoneValue = user.getPhone();
+        //检查用户是否存在，如果存在该用户，返回错误码;满足任何一条都为true，证明用户已注册
+        if(checkValid(usernameValue,"username").error()|| 
+                checkValid(emailValue,"email").error()||
+                checkValid(phoneValue,"phone").error()){
+            //用户已存在
+            return ServerResponse.createByErrorMessage(Const.REGISTER_ERROR_MESSAGE);
         }
-        return  ServerResponse.createBySuccessMessage(Const.REGISTER_ERROR_MESSAGE);
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
+        user.setRole(0);
+        Integer resultCount = userMapper.insertOne(user);
+        if(resultCount>0){
+            //注册成功，校验成功
+            return ServerResponse.createBySuccessMessage(Const.REGISTER_SUCCESS_MESSAGE);
+        }
+        return ServerResponse.createByErrorMessage(Const.REGISTER_ILLEGAL_MESSAGE);
+        
+//        //先进行查询，如果不为空，则注册过；如果查询为空，则未注册，新增一条数据
+//        if(userOne == null){
+//            user.setPassword(pwd);
+//            user.setRole(0);
+//            user.setCreateTime(new Date());
+//            user.setUpdateTime(new Date());
+//            Integer resultCount = userMapper.insertOne(user);
+//            if(resultCount>0){
+//                return ServerResponse.createByErrorMessage(Const.REGISTER_SUCCESS_MESSAGE);
+//            }
+//        }
+//        return  ServerResponse.createBySuccessMessage(Const.REGISTER_ERROR_MESSAGE);
     }
 
     //检查用户名是否有效
@@ -66,12 +87,15 @@ public class UserServiceImpl implements UserService{
             User user = userMapper.selectByType(str,type);
             return getCheckResult(user);
         }
-        return null;
+        //参数不合法
+        return ServerResponse.createByErrorMessage(Const.illegalArgument);
     }
     public ServerResponse getCheckResult(User user){
         if(user!=null){
+            //如果不为空，说明有这一行，用户已存在
             return ServerResponse.createByErrorMessage(Const.REGISTER_ERROR_MESSAGE);
         }
+        //为空，校验成功
         return ServerResponse.createBySuccessMessage(Const.REGISTER_SUCCESS_MESSAGE);
     }
 

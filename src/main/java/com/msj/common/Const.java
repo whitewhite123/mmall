@@ -8,9 +8,13 @@ public class Const {
     //MD5加盐
     public static final String code = "salt";
 
+    //参数错误
+    public static final String illegalArgument = "参数不合法";
+
 //    用户接口
     public static final String REGISTER_SUCCESS_MESSAGE = "校验成功";
     public static final String REGISTER_ERROR_MESSAGE = "用户已存在";
+    public static final String REGISTER_ILLEGAL_MESSAGE = "注册信息不合法";
 
     public static final String GETINFORMATION_ERROR_MESSAGE = "用户未登录,无法获取当前用户信息";
 

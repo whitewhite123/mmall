@@ -42,7 +42,6 @@ public class UserController {
     @ResponseBody
     public ServerResponse checkValid(String str, String type){
         return userService.checkValid(str,type);
-        
     }
 
     //4、获取用户信息
