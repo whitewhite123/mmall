@@ -49,10 +49,7 @@ public class UserController {
     @RequestMapping("/get_user_info.do")
     @ResponseBody
     public ServerResponse getUserInfo(HttpSession session){
-        if(session.getAttribute("user")!=null){
-            return ServerResponse.createSuccess(session.getAttribute("user"));
-        }
-        return ServerResponse.createByErrorMessage(Const.GETINFORMATION_ERROR_MESSAGE);
+        return userService.getUserInfo(session);
     }
 
     //5、忘记密码

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.rmi.ServerError;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,14 +21,14 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
-//    门户
+//    门户(用户接口)
     //登录
     public ServerResponse login(String username,String password, HttpSession session) {
         String pwd = MD5Util.MD5EncodeUtf8(password);
         User user = userMapper.selectByName(username, pwd);
         //如果取得出来user，证明已经被注册过了的，登录成功，否则登录失败
         if (user!= null) {
-            session.setAttribute("user",user);
+            session.setAttribute("user",user); //设置session
             return ServerResponse.createSuccess(user);
         }
         return ServerResponse.createByErrorCodeMessage(ResponseCode.LOGIN_ERROR.getCode(),
@@ -99,6 +100,14 @@ public class UserServiceImpl implements UserService{
         return ServerResponse.createBySuccessMessage(Const.REGISTER_SUCCESS_MESSAGE);
     }
 
+    //获取登录用户信息
+    public ServerResponse getUserInfo(HttpSession session){
+        if(session.getAttribute("user")!=null){
+            //session不为空，说明已经登录了，可以取得用户信息
+            return ServerResponse.createSuccess(session.getAttribute("user"));
+        }
+        return ServerResponse.createByErrorMessage(Const.GETINFORMATION_ERROR_MESSAGE);
+    }
     public User getQuestion(String username) {
         return userMapper.getQuestion(username);
     }

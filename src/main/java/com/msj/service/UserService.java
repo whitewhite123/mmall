@@ -12,6 +12,7 @@ public interface UserService {
     ServerResponse login(String username,String password, HttpSession session);
     ServerResponse Register(User user);
     ServerResponse checkValid(String str,String type);
+    ServerResponse getUserInfo(HttpSession session);
     User getQuestion(String username);
     User getAnswer(@Param("username")String username,@Param("question")String question);
     Integer getUpdatePassword(@Param("username")String username,@Param("password")String password);
