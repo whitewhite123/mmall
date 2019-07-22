@@ -42,7 +42,7 @@ public class ProductManageController {
             return ServerResponse.createSuccess(productPageInfo);
 
         }
-        return ServerResponse.createErrorByMessage(ManageConst.GETPRODUCT_ERROR);
+        return ServerResponse.createByErrorMessage(ManageConst.GETPRODUCT_ERROR);
     }
 
     /**
@@ -82,7 +82,7 @@ public class ProductManageController {
         if(productDetail!=null){
             return ServerResponse.createSuccess(productDetail);
         }
-        return ServerResponse.createErrorByMessage(ManageConst.GETLIST_ERROR);
+        return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
     }
 
     /**
@@ -96,9 +96,9 @@ public class ProductManageController {
     public ServerResponse setStatus(Integer productId,Integer status){
         int num = productService.editProductStatus(productId, status);
         if(num>0){
-            return ServerResponse.createSuccessByMessage(ManageConst.UPDATE_STATUS_SUCCESS);
+            return ServerResponse.createBySuccessMessage(ManageConst.UPDATE_STATUS_SUCCESS);
         }
-        return ServerResponse.createErrorByMessage(ManageConst.UPDATE_STATUS_ERROR);
+        return ServerResponse.createByErrorMessage(ManageConst.UPDATE_STATUS_ERROR);
     }
 
     /**
@@ -118,15 +118,15 @@ public class ProductManageController {
             int num = productService.editProduct(pro);
             System.out.println("更新"+num);
             if(num>0){
-                return ServerResponse.createSuccessByMessage(ManageConst.UPDATE_STATUS_SUCCESS);
+                return ServerResponse.createBySuccessMessage(ManageConst.UPDATE_STATUS_SUCCESS);
             }
         }
         int num = productService.addProduct(product);
         System.out.println("新增"+num);
         if(num>0){
-            return ServerResponse.createSuccessByMessage(ManageConst.INSERT_PRODUCT_SUCCESS);
+            return ServerResponse.createBySuccessMessage(ManageConst.INSERT_PRODUCT_SUCCESS);
         }
-        return ServerResponse.createErrorByMessage(ManageConst.UPDATE_STATUS_ERROR);
+        return ServerResponse.createByErrorMessage(ManageConst.UPDATE_STATUS_ERROR);
 
 
     }

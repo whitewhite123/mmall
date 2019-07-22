@@ -1,9 +1,11 @@
 package com.msj.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.Date;
-
+//如果值为null,则删除该key
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
     private Integer id;
 

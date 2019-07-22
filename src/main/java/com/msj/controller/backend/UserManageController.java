@@ -31,14 +31,9 @@ public class UserManageController {
      */
     @RequestMapping("/login.do")
     @ResponseBody
-    public ServerResponse login(@Param("username")String username, @Param("password")String password,
+    public ServerResponse login(String username,String password,
             HttpSession session){
-        User user = userService.getLogin(username, password);
-        if(user!=null){
-            session.setAttribute("user",user);
-            return ServerResponse.createSuccess(user);
-        }
-        return ServerResponse.createErrorByMessage(ManageConst.LOGIN_ERROR);
+        return userService.login(username, password,session);
     }
 
     /**
@@ -60,6 +55,6 @@ public class UserManageController {
             PageInfo<User> pageInfo = new PageInfo<User>(userList);
             return ServerResponse.createSuccess(pageInfo);
         }
-        return ServerResponse.createErrorByMessage(ManageConst.GETLIST_ERROR);
+        return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
     }
 }

@@ -52,6 +52,6 @@ public class ProductController {
         if(product!=null){
             return ServerResponse.createSuccess(product);
         }
-        return ServerResponse.createErrorByMessage(Const.PRODUCT_DETAIL_ERROR);
+        return ServerResponse.createByErrorMessage(Const.PRODUCT_DETAIL_ERROR);
     }
 }

@@ -1,5 +1,6 @@
 package com.msj.common;
 
+//枚举类
 public enum ResponseCode {
     //用户接口
     LOGIN_SUCCESS(200,"SUCCESS"),

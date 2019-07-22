@@ -58,7 +58,7 @@ public class ServerResponse {
      * @param msg  自定义消息
      * @return
             */
-    public static ServerResponse createSuccessByMessage(String msg){
+    public static ServerResponse createBySuccessMessage(String msg){
         return new ServerResponse(Const.SUCCESS_CODE,msg);
     }
 
@@ -69,7 +69,7 @@ public class ServerResponse {
      * @param msg 自定义消息
      * @return
      */
-    public static ServerResponse createErrorByMessage(String msg){
+    public static ServerResponse createByErrorMessage(String msg){
         return new ServerResponse(Const.ERROR_CODE,msg);
     }
 
@@ -79,7 +79,7 @@ public class ServerResponse {
      * @param msg  自定义消息
      * @return
      */
-        public static ServerResponse createErrorByCodeMessage(Integer status,String msg){
+        public static ServerResponse createByErrorCodeMessage(Integer status,String msg){
             return new ServerResponse(status,msg);
     }
 

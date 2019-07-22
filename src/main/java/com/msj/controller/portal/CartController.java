@@ -31,7 +31,7 @@ public class CartController {
             System.out.println(cartProductList);
             return ServerResponse.createSuccess(cartProductList);
         }
-        return ServerResponse.createErrorByMessage(Const.UPDATE_INFORMATION_ERROR);
+        return ServerResponse.createByErrorMessage(Const.UPDATE_INFORMATION_ERROR);
     }
 }
 

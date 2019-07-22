@@ -16,7 +16,9 @@ public interface UserMapper {
 
 //  门户
     User selectByName(@Param("username")String username,@Param("password")String password);
-    User selectForRegister(User user);
+    User selectIs(User user);
+    Integer insertOne(User user);
+    User selectByType(@Param("str")String str,@Param("type")String type);
     User selectForCheck(String str);
     User getQuestion(String username);
     User checkAnswer(@Param("username")String username,@Param("question")String question);

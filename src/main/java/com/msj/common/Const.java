@@ -5,6 +5,9 @@ public class Const {
     public static final int SUCCESS_CODE = 0;
     public static final int ERROR_CODE = 1;
 
+    //MD5加盐
+    public static final String code = "salt";
+
 //    用户接口
     public static final String REGISTER_SUCCESS_MESSAGE = "校验成功";
     public static final String REGISTER_ERROR_MESSAGE = "用户已存在";
