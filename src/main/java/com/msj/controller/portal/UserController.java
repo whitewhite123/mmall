@@ -70,19 +70,12 @@ public class UserController {
 
     }
 
-    //7、忘记密码重设密码
-    //todo 忘记密码重设密码
+    //7、忘记密码：重设密码
     @RequestMapping("/forget_reset_password.do")
     @ResponseBody
     public ServerResponse forgetResetPassword(String username,String passwordNew,String forgetToken,HttpSession session){
-        System.out.println(session.getAttribute("forgetToken"));
-        if((session.getAttribute("forgetToken")).equals(forgetToken)){
-            Integer num = userService.getUpdatePassword(username, passwordNew);
-            if(num>0){
-                return ServerResponse.createBySuccessMessage(Const.UPDATE_PASSWORD_SUCCESS);
-            }
-        }
-        return ServerResponse.createByErrorMessage(Const.UPDATE_PASSWORD_ERROR);
+        return userService.forgetResetPassword(username,passwordNew,forgetToken,session);
+
     }
 
     //8、登录状态：重置密码

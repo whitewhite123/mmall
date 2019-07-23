@@ -17,7 +17,7 @@ public interface UserService {
     ServerResponse getQuestion(String username);
     ServerResponse resetPassword(String passwordOld,String passwordNew,HttpSession session);
     ServerResponse checkAnswer(User user,HttpSession session);
-    Integer getUpdatePassword(@Param("username")String username,@Param("password")String password);
+    ServerResponse forgetResetPassword(String username,String passwordNew,String forgetToken,HttpSession session);
     ServerResponse updateInformation(User user,HttpSession session);
     ServerResponse getInformation(HttpSession session);
 

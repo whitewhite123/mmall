@@ -26,6 +26,7 @@ public class Const {
 
     public static final String UPDATE_PASSWORD_SUCCESS = "修改密码成功";
     public static final String UPDATE_PASSWORD_ERROR = "修改密码操作失效";
+    public static final String ILLEGAL_TOKEN = "token已经失效";
     public static final String UPDATE_PASSWORD_ERROR2 = "旧密码输入错误";
 
     public static final String UPDATE_INFORMATION_SUCCESS = "更新个人信息成功";

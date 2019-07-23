@@ -128,9 +128,9 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    //登录状态中重设密码
+    //登录状态--重设密码
     public ServerResponse resetPassword(String passwordOld, String passwordNew, HttpSession session) {
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         Integer id = user.getId();
         User userInformation = userMapper.getInformation(id);
 
@@ -147,12 +147,13 @@ public class UserServiceImpl implements UserService {
     }
 
     //提交问题答案
-    public ServerResponse checkAnswer(User user,HttpSession session) {
+    public ServerResponse checkAnswer(User user, HttpSession session) {
         User userOne = userMapper.checkAnswer(user.getUsername(), user.getQuestion());
-        if(userOne != null){
-            if((userOne.getAnswer()).equals(user.getAnswer())){
+        if (userOne != null) {
+            if ((userOne.getAnswer()).equals(user.getAnswer())) {
                 String token = UUID.randomUUID().toString();
                 ServerResponse serverResponse = ServerResponse.createSuccess(token);
+                session.setAttribute("token", token);
                 return serverResponse;
             }
             return ServerResponse.createByErrorMessage(Const.CHECKEANSWER_ERROR);//问题答案错误
@@ -160,10 +161,20 @@ public class UserServiceImpl implements UserService {
         return ServerResponse.createByErrorMessage(Const.GETQUESTION_ILLEGAL);//用户未注册
     }
 
-    public Integer getUpdatePassword(String username, String password) {
-        return userMapper.updatePassword(username, password);
+    //忘记密码--重设密码
+    public ServerResponse forgetResetPassword(String username, String passwordNew, String forgetToken, HttpSession session) {
+        System.out.println(session.getAttribute("token"));
+        if ((session.getAttribute("token")).equals(forgetToken)) {
+            Integer resultCount = userMapper.updatePassword(username, passwordNew);
+            if (resultCount > 0) {
+                return ServerResponse.createBySuccessMessage(Const.UPDATE_PASSWORD_SUCCESS);//修改密码成功
+            }
+            return ServerResponse.createByErrorMessage(Const.UPDATE_PASSWORD_ERROR);//修改密码操作失效
+        }
+        return ServerResponse.createByErrorMessage(Const.ILLEGAL_TOKEN);//token已经失效
     }
 
+    //登录状态更新个人信息
     public ServerResponse updateInformation(User user, HttpSession session) {
         //如果session取出来不为空，就进行判断，为空说明未登录
         User userOne = (User) session.getAttribute("user");
@@ -186,11 +197,11 @@ public class UserServiceImpl implements UserService {
 
     //获取当前登录用户的详细信息，并强制登录
     public ServerResponse getInformation(HttpSession session) {
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         Integer id = user.getId();
         User UserInformation = userMapper.getInformation(id);
         UserInformation.setPassword("");
-        if(UserInformation!=null){
+        if (UserInformation != null) {
             return ServerResponse.createSuccess(UserInformation);//显示用户详细信息
         }
         return ServerResponse.createByErrorCodeMessage(ResponseCode.GETINFORMATION_ERROR.getCode(),
