@@ -18,6 +18,7 @@ import java.rmi.ServerError;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -145,8 +146,18 @@ public class UserServiceImpl implements UserService {
         return ServerResponse.createByErrorMessage(Const.UPDATE_PASSWORD_ERROR2);//旧密码输入错误
     }
 
-    public User getAnswer(String username, String question) {
-        return userMapper.checkAnswer(username, question);
+    //提交问题答案
+    public ServerResponse checkAnswer(User user,HttpSession session) {
+        User userOne = userMapper.checkAnswer(user.getUsername(), user.getQuestion());
+        if(userOne != null){
+            if((userOne.getAnswer()).equals(user.getAnswer())){
+                String token = UUID.randomUUID().toString();
+                ServerResponse serverResponse = ServerResponse.createSuccess(token);
+                return serverResponse;
+            }
+            return ServerResponse.createByErrorMessage(Const.CHECKEANSWER_ERROR);//问题答案错误
+        }
+        return ServerResponse.createByErrorMessage(Const.GETQUESTION_ILLEGAL);//用户未注册
     }
 
     public Integer getUpdatePassword(String username, String password) {

@@ -63,21 +63,11 @@ public class UserController {
     }
 
     //6、提交问题答案
-    //todo 提交问题答案
     @RequestMapping("/forget_check_answer.do")
     @ResponseBody
-    public ServerResponse forgetCheckAnswer(@Param("username")String username, @Param("question")String question,
-                                            @Param("answer")String answer, HttpSession session){
-        User user = userService.getAnswer(username, question);
-        if(user!=null){
-            if((user.getAnswer()).equals(answer)){
-                ServerResponse serverResponse = ServerResponse.createBySuccessMessage(Const.CHECKANSWER_SUCCESS);
-                String msg = ServerResponse.createBySuccessMessage(Const.CHECKANSWER_SUCCESS).getMsg();
-                session.setAttribute("forgetToken",msg);
-                return serverResponse;
-            }
-        }
-        return ServerResponse.createByErrorMessage(Const.CHECKEANSWER_ERROR);
+    public ServerResponse forgetCheckAnswer(User user, HttpSession session){
+        return userService.checkAnswer(user,session);
+
     }
 
     //7、忘记密码重设密码
