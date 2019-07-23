@@ -23,16 +23,10 @@ public class UserManageController {
     private UserService userService;
 
 
-    /**
-     * 登录
-     * @param username
-     * @param password
-     * @return
-     */
+   //登录
     @RequestMapping("/login.do")
     @ResponseBody
-    public ServerResponse login(String username,String password,
-            HttpSession session){
+    public ServerResponse login(String username,String password,HttpSession session){
         return userService.login(username, password,session);
     }
 
