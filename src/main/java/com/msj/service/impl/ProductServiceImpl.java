@@ -1,5 +1,7 @@
 package com.msj.service.impl;
 
+import com.msj.common.Const;
+import com.msj.common.ServerResponse;
 import com.msj.mapper.ProductMapper;
 import com.msj.pojo.Product;
 import com.msj.service.ProductService;
@@ -15,9 +17,16 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductMapper productMapper;
 
-    public Product selectDetail(Integer id) {
-        return productMapper.selectByPrimaryKey(id);
+    //产品详情
+    public ServerResponse getDetail(Integer id) {
+        Product product = productMapper.selectByPrimaryKey(id);
+        if(product!=null){
+            return ServerResponse.createSuccess(product);
+        }
+        return ServerResponse.createByErrorMessage(Const.PRODUCT_DETAIL_ERROR);//该商品已下架或删除
     }
+
+
 
     public List<Product> getProductList() {
         return productMapper.selectAll();

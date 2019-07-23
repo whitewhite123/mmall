@@ -2,6 +2,7 @@ package com.msj.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.xml.soap.Text;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -16,7 +17,9 @@ public class Product {
 
     private String mainImage;
 
-    private String subImage;
+    private String subImages;
+
+    public String detail;
 
     private Double price;
 
@@ -38,12 +41,20 @@ public class Product {
         this.id = id;
     }
 
-    public String getSubImage() {
-        return subImage;
+    public String getSubImages() {
+        return subImages;
     }
 
-    public void setSubImage(String subImage) {
-        this.subImage = subImage;
+    public void setSubImages(String subImages) {
+        this.subImages = subImages;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public Integer getCategoryId() {

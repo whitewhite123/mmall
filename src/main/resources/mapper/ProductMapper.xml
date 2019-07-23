@@ -7,6 +7,8 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
     <result column="main_image" property="mainImage" jdbcType="VARCHAR" />
+    <result column="sub_images" property="subImages" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="DECIMAL" />
     <result column="stock" property="stock" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
@@ -18,11 +20,13 @@
     <result column="detail" property="detail" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, category_id, name, subtitle, main_image, price, stock, status, create_time, update_time
+    id, category_id, name, subtitle, main_image,sub_images,detail,price, stock, status, create_time, update_time
   </sql>
   <sql id="Blob_Column_List" >
     sub_images, detail
   </sql>
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
        select
        <include refid="Base_Column_List"/>

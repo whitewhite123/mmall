@@ -33,18 +33,10 @@ public class ProductController {
         return ServerResponse.createSuccess(productPageInfo);
     }
 
-    /**
-     * 产品详情
-     * @param productId
-     * @return
-     */
+    //产品详情
     @RequestMapping("/detail.do")
     @ResponseBody
     public ServerResponse detail(Integer productId){
-        Product product = productService.selectDetail(productId);
-        if(product!=null){
-            return ServerResponse.createSuccess(product);
-        }
-        return ServerResponse.createByErrorMessage(Const.PRODUCT_DETAIL_ERROR);
+        return productService.getDetail(productId);
     }
 }
