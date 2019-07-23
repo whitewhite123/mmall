@@ -17,7 +17,7 @@ public interface UserService {
     ServerResponse resetPassword(String passwordOld,String passwordNew,HttpSession session);
     User getAnswer(@Param("username")String username,@Param("question")String question);
     Integer getUpdatePassword(@Param("username")String username,@Param("password")String password);
-    Integer getUpdateInformation(User user);
+    ServerResponse updateInformation(User user,HttpSession session);
 
 //    后台
     List<User> getUserList();

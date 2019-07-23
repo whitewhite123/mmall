@@ -30,6 +30,7 @@
                 <value>classpath:mapper/CartMapper.xml</value>
             </list>
         </property>
+        <property name="configLocation" value="classpath:mybatis.xml"/>
     </bean>
 
     <!--扫包-->

@@ -139,7 +139,7 @@
     where username=#{username}
   </update>
 
-    <update id="updateInformation">
+    <update id="updateInformation" parameterType="com.msj.pojo.User">
         update mmall_user
         <set>
             <if test="email!=null">
@@ -149,10 +149,10 @@
                 phone=#{phone},
             </if>
             <if test="question!=null">
-                question=#{quesion},
+                question=#{question},
             </if>
             <if test="answer!=null">
-                answer=#{answer}
+                answer=#{answer},
             </if>
             <if test="updateTime!=null">
                 update_time=#{updateTime}

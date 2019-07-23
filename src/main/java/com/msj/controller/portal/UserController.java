@@ -104,17 +104,9 @@ public class UserController {
     //9、登录状态更新个人信息
     @RequestMapping("/update_information.do")
     @ResponseBody
-    public ServerResponse updateInformation(HttpSession session){
-        //如果session取出来不为空，就进行判断，为空说明未登录
-        User userList = (User)session.getAttribute("user");
-        if(userList!=null){
-            userList.setUpdateTime(new Date());
-            Integer num = userService.getUpdateInformation(userList);
-            if(num>0){
-                return ServerResponse.createBySuccessMessage(Const.UPDATE_INFORMATION_SUCCESS);
-            }
-        }
-        return ServerResponse.createByErrorMessage(Const.UPDATE_INFORMATION_ERROR);
+    public ServerResponse updateInformation(User user,HttpSession session){
+        return userService.updateInformation(user,session);
+
     }
 
 
