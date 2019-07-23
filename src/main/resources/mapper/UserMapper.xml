@@ -134,7 +134,7 @@
     select answer from mmall_user where username=#{username} and question=#{question}
   </select>
 
-    <update id="updatePassword">
+    <update id="updatePassword" parameterType="String">
     update mmall_user set password=#{password}
     where username=#{username}
   </update>

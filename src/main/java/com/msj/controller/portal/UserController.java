@@ -61,6 +61,7 @@ public class UserController {
     }
 
     //6、提交问题答案
+    //todo 提交问题答案
     @RequestMapping("/forget_check_answer.do")
     @ResponseBody
     public ServerResponse forgetCheckAnswer(@Param("username")String username, @Param("question")String question,
@@ -78,6 +79,7 @@ public class UserController {
     }
 
     //7、忘记密码重设密码
+    //todo 忘记密码重设密码
     @RequestMapping("/forget_reset_password.do")
     @ResponseBody
     public ServerResponse forgetResetPassword(String username,String passwordNew,String forgetToken,HttpSession session){
@@ -94,17 +96,9 @@ public class UserController {
     //8、登录状态：重置密码
     @RequestMapping("/reset_password.do")
     @ResponseBody
-    public ServerResponse loginResetPassword(String passwordOld,String passwordNew,HttpSession session){
-        User user = (User)session.getAttribute("user");
-        String password = user.getPassword();
-        String username = user.getUsername();
-        if(passwordOld.equals(password)){
-            Integer num = userService.getUpdatePassword(username, passwordNew);
-            if(num>0){
-                return ServerResponse.createBySuccessMessage(Const.UPDATE_PASSWORD_SUCCESS);
-            }
-        }
-        return ServerResponse.createByErrorMessage(Const.UPDATE_PASSWORD_ERROR2);
+    public ServerResponse ResetPassword(String passwordOld,String passwordNew,HttpSession session){
+        return userService.resetPassword(passwordOld,passwordNew,session);
+
     }
 
     //9、登录状态更新个人信息
