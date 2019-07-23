@@ -11,7 +11,9 @@ import com.mysql.fabric.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.rmi.ServerError;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,8 +32,6 @@ public class UserServiceImpl implements UserService {
         //如果取得出来user，证明已经被注册过了的，登录成功，否则登录失败
         if (user != null) {
             session.setAttribute("user", user); //设置session
-            user.setPassword(pwd);
-            session.setAttribute("userDetail", user);
             return ServerResponse.createSuccess(user);
         }
         return ServerResponse.createByErrorCodeMessage(ResponseCode.LOGIN_ERROR.getCode(),
@@ -129,11 +129,14 @@ public class UserServiceImpl implements UserService {
 
     //登录状态中重设密码
     public ServerResponse resetPassword(String passwordOld, String passwordNew, HttpSession session) {
-        User user = (User) session.getAttribute("userDetail");
+        User user = (User)session.getAttribute("user");
+        Integer id = user.getId();
+        User userInformation = userMapper.getInformation(id);
+
         String pwdOld = MD5Util.MD5EncodeUtf8(passwordOld);
         String pwdNew = MD5Util.MD5EncodeUtf8(passwordNew);
         //判断旧密码输入是否正确
-        if ((user.getPassword()).equals(pwdOld)) {
+        if ((userInformation.getPassword()).equals(pwdOld)) {
             Integer resultCount = userMapper.updatePassword(user.getUsername(), pwdNew);
             if (resultCount > 0) {
                 return ServerResponse.createBySuccessMessage(Const.UPDATE_PASSWORD_SUCCESS);//修改密码成功
@@ -170,8 +173,16 @@ public class UserServiceImpl implements UserService {
         return ServerResponse.createByErrorMessage(Const.UPDATE_INFORMATION_ERROR);//用户未登录
     }
 
-    //后台
-    public List<User> getUserList() {
-        return userMapper.selectUserList();
+    //获取当前登录用户的详细信息，并强制登录
+    public ServerResponse getInformation(HttpSession session) {
+        User user = (User)session.getAttribute("user");
+        Integer id = user.getId();
+        User UserInformation = userMapper.getInformation(id);
+        UserInformation.setPassword("");
+        if(UserInformation!=null){
+            return ServerResponse.createSuccess(UserInformation);//显示用户详细信息
+        }
+        return ServerResponse.createByErrorCodeMessage(ResponseCode.GETINFORMATION_ERROR.getCode(),
+                ResponseCode.GETINFORMATION_ERROR.getDesc());
     }
 }

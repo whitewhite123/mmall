@@ -4,6 +4,7 @@ import com.msj.common.ServerResponse;
 import com.msj.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface UserService {
     User getAnswer(@Param("username")String username,@Param("question")String question);
     Integer getUpdatePassword(@Param("username")String username,@Param("password")String password);
     ServerResponse updateInformation(User user,HttpSession session);
+    ServerResponse getInformation(HttpSession session);
 
-//    后台
-    List<User> getUserList();
+
 }

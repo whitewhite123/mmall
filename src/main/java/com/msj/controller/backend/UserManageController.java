@@ -43,18 +43,18 @@ public class UserManageController {
      * @param session
      * @return
      */
-    @RequestMapping("/list.do")
-    @ResponseBody
-    public ServerResponse list(@RequestParam(value = "pageNum",defaultValue = "10")Integer pageNum,
-                               @RequestParam(value = "pageSize",defaultValue = "1")Integer pageSize,
-                               HttpSession session){
-        User user = (User)session.getAttribute("user");
-        if(user!=null){
-            PageHelper.startPage(pageNum,pageNum);
-            List<User> userList = userService.getUserList();
-            PageInfo<User> pageInfo = new PageInfo<User>(userList);
-            return ServerResponse.createSuccess(pageInfo);
-        }
-        return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
-    }
+//    @RequestMapping("/list.do")
+//    @ResponseBody
+//    public ServerResponse list(@RequestParam(value = "pageNum",defaultValue = "10")Integer pageNum,
+//                               @RequestParam(value = "pageSize",defaultValue = "1")Integer pageSize,
+//                               HttpSession session){
+//        User user = (User)session.getAttribute("user");
+//        if(user!=null){
+//            PageHelper.startPage(pageNum,pageNum);
+//            List<User> userList = userService.getUserList();
+//            PageInfo<User> pageInfo = new PageInfo<User>(userList);
+//            return ServerResponse.createSuccess(pageInfo);
+//        }
+//        return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
+//    }
 }

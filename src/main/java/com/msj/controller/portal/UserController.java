@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 
@@ -109,8 +111,15 @@ public class UserController {
 
     }
 
+    //10、获得当前用户的详细信息，并强制登录
+    @RequestMapping("/get_information.do")
+    @ResponseBody
+    public ServerResponse getInformation(HttpSession session, HttpServletResponse response){
+        return userService.getInformation(session);
 
-    //10、退出登录，设置session值为空
+    }
+
+    //11、退出登录，设置session值为空
     @RequestMapping("/logout.do")
     @ResponseBody
     public ServerResponse logout(HttpSession session){

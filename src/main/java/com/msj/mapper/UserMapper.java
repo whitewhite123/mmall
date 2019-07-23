@@ -24,7 +24,7 @@ public interface UserMapper {
     User checkAnswer(@Param("username")String username,@Param("question")String question);
     Integer updatePassword(@Param("username")String username,@Param("password")String password);
     Integer updateInformation(User user);
+    User getInformation(Integer id);
 
-//   用户
-    List<User> selectUserList();
+
 }

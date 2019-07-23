@@ -161,11 +161,11 @@
         where id=#{id}
     </update>
 
-    <!--后台-->
-    <select id="selectUserList" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
+    <select id="getInformation" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
         from mmall_user
-        where role = 0;
+        where id = #{id};
     </select>
+
+
 </mapper>
