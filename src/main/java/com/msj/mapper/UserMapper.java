@@ -26,5 +26,8 @@ public interface UserMapper {
     Integer updateInformation(User user);
     User getInformation(Integer id);
 
+//    后台
+    List<User> selectUserList(Integer role);
+
 
 }

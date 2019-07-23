@@ -121,7 +121,6 @@
         </if>
     </select>
 
-
     <select id="selectForCheck" resultMap="BaseResultMap">
     select * from mmall_user where username = #{str}
   </select>
@@ -165,6 +164,13 @@
         select <include refid="Base_Column_List"/>
         from mmall_user
         where id = #{id};
+    </select>
+
+    <!--后台-->
+    <select id="selectUserList" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from mmall_user
+        where role = #{role}
     </select>
 
 

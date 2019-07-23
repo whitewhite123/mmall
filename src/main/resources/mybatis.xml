@@ -10,4 +10,8 @@
        <setting name="defaultExecutorType" value="REUSE" />
        <setting name="logImpl" value="STDOUT_LOGGING" />
    </settings>
+    <!--分页配置pagehelper4.x版本-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper"></plugin>
+    </plugins>
 </configuration>

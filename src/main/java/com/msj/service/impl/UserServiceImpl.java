@@ -1,6 +1,9 @@
 package com.msj.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.msj.common.Const;
+import com.msj.common.ManageConst;
 import com.msj.common.ResponseCode;
 import com.msj.common.ServerResponse;
 import com.msj.mapper.UserMapper;
@@ -25,7 +28,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
-    //    门户(用户接口)
+//   门户(用户接口)
     //登录
     public ServerResponse login(String username, String password, HttpSession session) {
         String pwd = MD5Util.MD5EncodeUtf8(password);
@@ -217,5 +220,28 @@ public class UserServiceImpl implements UserService{
             return ServerResponse.createBySuccessMessage(Const.LOGOUT_SUCCESS);//退出成功
         }
         return ServerResponse.createByErrorMessage(Const.LOGOUT_ERROR);//服务端异常
+    }
+
+
+//    后台（用户接口）
+    //查看用户列表
+    public ServerResponse getList(Integer pageSize, Integer pageNum, HttpSession session) {
+        User manageUser = (User) session.getAttribute("user");
+        //manageUser不为空，说明登录成功
+        if (manageUser != null) {
+            //判断角色：role=1管理员，role=0用户
+            if(manageUser.getRole() == 1){
+                PageHelper.startPage(pageNum, pageSize);//页数，页大小
+                Integer userRole = 0;
+                List<User> userList = userMapper.selectUserList(userRole);
+                PageInfo<User> pageInfo = new PageInfo<User>(userList);
+                return ServerResponse.createSuccess(pageInfo);
+            }
+            //如果role不为1（管理员），说明没有权限
+            return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
+        }
+        return ServerResponse.createByErrorCodeMessage(ResponseCode.MANAGE_LOGIN_ERROR.getCode(),
+                ResponseCode.MANAGE_LOGIN_ERROR.getDesc());//用户未登录,请登录
+
     }
 }

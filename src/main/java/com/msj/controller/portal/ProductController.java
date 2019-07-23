@@ -20,14 +20,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    /**
-     *
-     * @param categoryId
-     * @param pageNum
-     * @param pageSize
-     * @param orderBy
-     * @return
-     */
+    //产品搜素及动态排序
     @RequestMapping("/list.do")
     @ResponseBody
     public ServerResponse list(Integer categoryId, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,

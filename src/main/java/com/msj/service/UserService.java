@@ -22,4 +22,7 @@ public interface UserService {
     ServerResponse getInformation(HttpSession session);
     ServerResponse logout(HttpSession session);
 
+//    后台
+    ServerResponse getList(Integer pageSize,Integer pageNum,HttpSession session);
+
 }

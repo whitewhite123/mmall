@@ -23,32 +23,20 @@ public class UserManageController {
     private UserService userService;
 
 
-   //登录
+    //登录
     @RequestMapping("/login.do")
     @ResponseBody
-    public ServerResponse login(String username,String password,HttpSession session){
-        return userService.login(username, password,session);
+    public ServerResponse login(String username, String password, HttpSession session) {
+        return userService.login(username, password, session);
     }
 
-    /**
-     * 查看用户列表
-     * @param pageNum
-     * @param pageSize
-     * @param session
-     * @return
-     */
-//    @RequestMapping("/list.do")
-//    @ResponseBody
-//    public ServerResponse list(@RequestParam(value = "pageNum",defaultValue = "10")Integer pageNum,
-//                               @RequestParam(value = "pageSize",defaultValue = "1")Integer pageSize,
-//                               HttpSession session){
-//        User user = (User)session.getAttribute("user");
-//        if(user!=null){
-//            PageHelper.startPage(pageNum,pageNum);
-//            List<User> userList = userService.getUserList();
-//            PageInfo<User> pageInfo = new PageInfo<User>(userList);
-//            return ServerResponse.createSuccess(pageInfo);
-//        }
-//        return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
-//    }
+    //查看用户列表
+    @RequestMapping("/list.do")
+    @ResponseBody
+    public ServerResponse list(@RequestParam(value = "pageNum", defaultValue = "10") Integer pageNum,
+                               @RequestParam(value = "pageSize", defaultValue = "1") Integer pageSize,
+                               HttpSession session) {
+        return userService.getList(pageSize,pageNum,session);
+
+    }
 }
