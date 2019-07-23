@@ -20,6 +20,6 @@ public interface UserService {
     ServerResponse forgetResetPassword(String username,String passwordNew,String forgetToken,HttpSession session);
     ServerResponse updateInformation(User user,HttpSession session);
     ServerResponse getInformation(HttpSession session);
-
+    ServerResponse logout(HttpSession session);
 
 }

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
@@ -165,7 +165,8 @@ public class UserServiceImpl implements UserService {
     public ServerResponse forgetResetPassword(String username, String passwordNew, String forgetToken, HttpSession session) {
         System.out.println(session.getAttribute("token"));
         if ((session.getAttribute("token")).equals(forgetToken)) {
-            Integer resultCount = userMapper.updatePassword(username, passwordNew);
+            String pwdNew = MD5Util.MD5EncodeUtf8(passwordNew);
+            Integer resultCount = userMapper.updatePassword(username, pwdNew);
             if (resultCount > 0) {
                 return ServerResponse.createBySuccessMessage(Const.UPDATE_PASSWORD_SUCCESS);//修改密码成功
             }
@@ -206,5 +207,15 @@ public class UserServiceImpl implements UserService {
         }
         return ServerResponse.createByErrorCodeMessage(ResponseCode.GETINFORMATION_ERROR.getCode(),
                 ResponseCode.GETINFORMATION_ERROR.getDesc());
+    }
+
+    //退出登录
+    public ServerResponse logout(HttpSession session) {
+        if(session.getAttribute("user")!=null){
+            //设置session为空
+            session.setAttribute("user",null);
+            return ServerResponse.createBySuccessMessage(Const.LOGOUT_SUCCESS);//退出成功
+        }
+        return ServerResponse.createByErrorMessage(Const.LOGOUT_ERROR);//服务端异常
     }
 }

@@ -105,12 +105,8 @@ public class UserController {
     //11、退出登录，设置session值为空
     @RequestMapping("/logout.do")
     @ResponseBody
-    public ServerResponse logout(HttpSession session){
-        if(session.getAttribute("user")!=null){
-            session.setAttribute("user",null);
-            return ServerResponse.createBySuccessMessage(Const.LOGOUT_SUCCESS);
-        }
-        return ServerResponse.createByErrorMessage(Const.LOGOUT_ERROR);
+    public ServerResponse logout(HttpSession session) {
+        return userService.logout(session);
     }
 
 }
