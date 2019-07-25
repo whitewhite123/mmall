@@ -22,27 +22,13 @@ public class ProductManageController {
     @Autowired
     private ProductService productService;
 
-    /**
-     * 查看产品list
-     * @param pageNum
-     * @param pageSize
-     * @param session
-     * @return
-     */
+    //产品list
     @RequestMapping("/list.do")
     @ResponseBody
     public ServerResponse list(@RequestParam(value = "pageNum",defaultValue ="1")Integer pageNum,
                                @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize,
                                HttpSession session){
-        User user = (User)session.getAttribute("user");
-        if(user!=null){
-            PageHelper.startPage(pageNum,pageSize);
-            List<Product> productList = productService.getProductList();
-            PageInfo<Product> productPageInfo = new PageInfo<Product>(productList);
-            return ServerResponse.createSuccess(productPageInfo);
-
-        }
-        return ServerResponse.createByErrorMessage(ManageConst.GETPRODUCT_ERROR);
+        return productService.getList(pageNum,pageSize,session);
     }
 
     /**
@@ -78,11 +64,12 @@ public class ProductManageController {
     @RequestMapping("/detail.do")
     @ResponseBody
     public ServerResponse detail(Integer productId){
-        Product productDetail = productService.getProductDetail(productId);
-        if(productDetail!=null){
-            return ServerResponse.createSuccess(productDetail);
-        }
-        return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
+//        Product productDetail = productService.getProductDetail(productId);
+//        if(productDetail!=null){
+//            return ServerResponse.createSuccess(productDetail);
+//        }
+//        return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
+        return null;
     }
 
     /**

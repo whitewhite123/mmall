@@ -25,18 +25,16 @@ public class ProductController {
     @ResponseBody
     public ServerResponse list(Integer categoryId, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize,
-                               @RequestParam(value = "orderBy",defaultValue = "") String orderBy){
+                               @RequestParam(value = "orderBy",defaultValue = "price_desc") String orderBy){
         //todo 根据categoryId查询
-        PageHelper.startPage(pageNum,pageSize);
-        List<Product> productList = productService.getProductList();
-        PageInfo<Product> productPageInfo = new PageInfo<Product>(productList);
-        return ServerResponse.createSuccess(productPageInfo);
+        return productService.getProductList(pageNum,pageSize,categoryId,orderBy);
+
     }
 
     //产品详情
     @RequestMapping("/detail.do")
     @ResponseBody
     public ServerResponse detail(Integer productId){
-        return productService.getDetail(productId);
+        return productService.getProductDetail(productId);
     }
 }

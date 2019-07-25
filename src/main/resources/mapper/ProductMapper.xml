@@ -1,82 +1,104 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.msj.mapper.ProductMapper" >
-  <resultMap id="BaseResultMap" type="com.msj.pojo.Product" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
-    <result column="main_image" property="mainImage" jdbcType="VARCHAR" />
-    <result column="sub_images" property="subImages" jdbcType="VARCHAR" />
-    <result column="detail" property="detail" jdbcType="VARCHAR" />
-    <result column="price" property="price" jdbcType="DECIMAL" />
-    <result column="stock" property="stock" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.msj.pojo.ProductWithBLOBs" extends="BaseResultMap" >
-    <result column="sub_images" property="subImages" jdbcType="LONGVARCHAR" />
-    <result column="detail" property="detail" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, category_id, name, subtitle, main_image,sub_images,detail,price, stock, status, create_time, update_time
-  </sql>
-  <sql id="Blob_Column_List" >
-    sub_images, detail
-  </sql>
+<mapper namespace="com.msj.mapper.ProductMapper">
+    <resultMap id="BaseResultMap" type="com.msj.pojo.Product">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="subtitle" property="subtitle" jdbcType="VARCHAR"/>
+        <result column="main_image" property="mainImage" jdbcType="VARCHAR"/>
+        <result column="sub_images" property="subImages" jdbcType="VARCHAR"/>
+        <result column="detail" property="detail" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="stock" property="stock" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.msj.pojo.ProductWithBLOBs" extends="BaseResultMap">
+        <result column="sub_images" property="subImages" jdbcType="LONGVARCHAR"/>
+        <result column="detail" property="detail" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="products">
+      id, category_id, name, subtitle, main_image,price, status
+    </sql>
+    <sql id="product_detail">
+      id, category_id, name, subtitle, main_image,sub_images,detail,price, stock, status, create_time, update_time
+    </sql>
+    <sql id="Blob_Column_List">
+      sub_images, detail
+    </sql>
 
 
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" >
-       select
-       <include refid="Base_Column_List"/>
-       from mmall_product where id=#{id}
-  </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="products"/>
+        from mmall_product where id=#{id}
+    </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByCategoryId" resultMap="BaseResultMap">
+        select
+        <include refid="product_detail"/>
+        from mmall_product
+        where category_id = #{categoryId}
+        order by
+        <if test="orderBy!=null and orderBy == 'price_desc'">
+            price desc
+        </if>
+        <if test='orderBy!=null and orderBy == "price_asc"'>
+            price asc
+        </if>
+    </select>
+
+    <select id="selectAllProducts" resultMap="BaseResultMap">
+        select <include refid="products"/> from mmall_product
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mmall_product
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <update id="updateByPrimaryKeySelective" parameterType="com.msj.pojo.ProductWithBLOBs" >
-    update mmall_product
-    <set >
-      <if test="categoryId != null" >
-        category_id = #{categoryId,jdbcType=INTEGER},
-      </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="subtitle != null" >
-        subtitle = #{subtitle,jdbcType=VARCHAR},
-      </if>
-      <if test="mainImage != null" >
-        main_image = #{mainImage,jdbcType=VARCHAR},
-      </if>
-      <if test="price != null" >
-        price = #{price,jdbcType=DECIMAL},
-      </if>
-      <if test="stock != null" >
-        stock = #{stock,jdbcType=INTEGER},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="subImages != null" >
-        sub_images = #{subImages,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="detail != null" >
-        detail = #{detail,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.msj.pojo.ProductWithBLOBs" >
+    <update id="updateByPrimaryKeySelective" parameterType="com.msj.pojo.ProductWithBLOBs">
+        update mmall_product
+        <set>
+            <if test="categoryId != null">
+                category_id = #{categoryId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="subtitle != null">
+                subtitle = #{subtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="mainImage != null">
+                main_image = #{mainImage,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="stock != null">
+                stock = #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="subImages != null">
+                sub_images = #{subImages,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="detail != null">
+                detail = #{detail,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.msj.pojo.ProductWithBLOBs">
     update mmall_product
     set category_id = #{categoryId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
@@ -91,7 +113,7 @@
       detail = #{detail,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.msj.pojo.Product" >
+    <update id="updateByPrimaryKey" parameterType="com.msj.pojo.Product">
     update mmall_product
     set category_id = #{categoryId,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
@@ -105,25 +127,20 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectAll" resultMap="BaseResultMap">
-     select
-     <include refid="Base_Column_List"/>
-     from mmall_product
-  </select>
 
-  <update id="updateProductStatus" parameterType="java.lang.Integer">
+    <update id="updateProductStatus" parameterType="java.lang.Integer">
      update mmall_product set status=#{status}
      where id=#{id}
   </update>
 
 
-  <insert id="insertProduct" parameterType="com.msj.pojo.Product">
+    <insert id="insertProduct" parameterType="com.msj.pojo.Product">
       insert into mmall_product(id,category_id, name, subtitle, main_image,sub_images, price, stock, status)
       values(id=#{id},category_id=#{categoryId}, name=#{name}, subtitle=#{subtitle},
       main_image=#{mainImage},sub_images=#{subImages},price={price}, stock=#{stock}, status=#{status})
   </insert>
 
-  <update id="updateProduct" parameterType="com.msj.pojo.Product">
+    <update id="updateProduct" parameterType="com.msj.pojo.Product">
       update mmall_product set category_id=#{categoryId}, name=#{name}, subtitle=#{subtitle},
       main_image=#{mainImage},sub_images=#{subImages},price={price}, stock=#{stock}, status=#{status}
       where id=#{id}

@@ -122,8 +122,8 @@
     </select>
 
     <select id="selectForCheck" resultMap="BaseResultMap">
-    select * from mmall_user where username = #{str}
-  </select>
+     select * from mmall_user where username = #{str}
+    </select>
 
     <select id="getQuestion" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/> from mmall_user where username=#{username};

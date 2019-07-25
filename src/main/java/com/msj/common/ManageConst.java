@@ -10,6 +10,8 @@ public class ManageConst {
     public static final String GETLIST_ERROR = "没有权限";
 
 //    产品接口
+    public static final String  ARGUMENT_ERROR = "参数错误";
+
     public static final String GETPRODUCT_ERROR = "用户未登录,请登录";
 
     public static final String UPDATE_STATUS_SUCCESS = "修改产品状态成功";

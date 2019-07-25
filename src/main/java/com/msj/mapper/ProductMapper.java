@@ -7,6 +7,13 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface ProductMapper {
+
+    List<Product> selectByCategoryId(@Param("categoryId") Integer categoryId,@Param("orderBy") String orderBy);
+
+    Product selectByPrimaryKey(Integer id);
+
+    List<Product> selectAllProducts();
+
     int deleteByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(ProductWithBLOBs record);
@@ -14,10 +21,6 @@ public interface ProductMapper {
     int updateByPrimaryKeyWithBLOBs(ProductWithBLOBs record);
 
     int updateByPrimaryKey(Product record);
-
-    Product selectByPrimaryKey(Integer id);
-
-    List<Product> selectAll();
 
     int updateProductStatus(@Param("id") Integer id, @Param("status") Integer status);
 
