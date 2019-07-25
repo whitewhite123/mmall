@@ -30,7 +30,7 @@ public class Const {
     public static final String UPDATE_PASSWORD_ERROR2 = "旧密码输入错误";
 
     public static final String UPDATE_INFORMATION_SUCCESS = "更新个人信息成功";
-    public static final String UPDATE_INFORMATION_ERROR = "用户未登录";
+    public static final String NEED_LOGIN_ERROR = "用户未登录";
 
     public static final String LOGOUT_SUCCESS = "退出成功";
     public static final String LOGOUT_ERROR = "服务端异常";

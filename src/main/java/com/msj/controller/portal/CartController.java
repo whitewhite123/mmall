@@ -19,19 +19,11 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    //购物车List列表
     @RequestMapping("/list.do")
     @ResponseBody
     public ServerResponse list(HttpSession session){
-        //todo 查出购物车的总额，字段名不同
-        User user = (User)session.getAttribute("user");
-        Integer userId = user.getId();
-        System.out.println(userId);
-        if(user!=null){
-            List<Cart> cartProductList = cartService.getCartProductList(userId);
-            System.out.println(cartProductList);
-            return ServerResponse.createSuccess(cartProductList);
-        }
-        return ServerResponse.createByErrorMessage(Const.UPDATE_INFORMATION_ERROR);
+        return cartService.getCartProductList(session);
     }
 }
 

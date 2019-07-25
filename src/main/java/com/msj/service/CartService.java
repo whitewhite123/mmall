@@ -1,9 +1,11 @@
 package com.msj.service;
 
+import com.msj.common.ServerResponse;
 import com.msj.pojo.Cart;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface CartService {
-    List<Cart> getCartProductList(Integer userId);
+    ServerResponse getCartProductList(HttpSession session);
 }

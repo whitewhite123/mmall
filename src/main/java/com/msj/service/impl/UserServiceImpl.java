@@ -196,7 +196,7 @@ public class UserServiceImpl implements UserService{
                 return ServerResponse.createBySuccessMessage(Const.UPDATE_INFORMATION_SUCCESS);//更新个人信息成功
             }
         }
-        return ServerResponse.createByErrorMessage(Const.UPDATE_INFORMATION_ERROR);//用户未登录
+        return ServerResponse.createByErrorMessage(Const.NEED_LOGIN_ERROR);//用户未登录
     }
 
     //获取当前登录用户的详细信息，并强制登录
