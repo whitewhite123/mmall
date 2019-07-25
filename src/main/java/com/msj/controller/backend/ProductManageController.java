@@ -49,20 +49,11 @@ public class ProductManageController {
         return null;
     }
 
-    /**
-     * 产品详情
-     * @param productId
-     * @return
-     */
+    //产品详情
     @RequestMapping("/detail.do")
     @ResponseBody
-    public ServerResponse detail(Integer productId){
-//        Product productDetail = productService.getProductDetail(productId);
-//        if(productDetail!=null){
-//            return ServerResponse.createSuccess(productDetail);
-//        }
-//        return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
-        return null;
+    public ServerResponse detail(Integer productId,HttpSession session){
+        return productService.getDetail(productId,session);
     }
 
     /**

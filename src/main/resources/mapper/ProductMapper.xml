@@ -32,13 +32,13 @@
 
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         select
-        <include refid="products"/>
+        <include refid="product_detail"/>
         from mmall_product where id=#{id}
     </select>
 
     <select id="selectByCategoryId" resultMap="BaseResultMap">
         select
-        <include refid="product_detail"/>
+        <include refid="products"/>
         from mmall_product
         where category_id = #{categoryId}
         order by

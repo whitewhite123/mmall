@@ -70,7 +70,18 @@ public class ProductServiceImpl implements ProductService{
             }
         }
 
-        return ServerResponse.createByErrorMessage(Const.UPDATE_INFORMATION_ERROR);//用户未登录
+        return ServerResponse.createByErrorMessage(ManageConst.GETPRODUCT_ERROR);//用户未登录
+    }
+
+    //产品详情
+    public ServerResponse getDetail(Integer productId, HttpSession session) {
+        if(session.getAttribute("user")!=null){
+            Product product = productMapper.selectByPrimaryKey(productId);
+            if(product!=null){
+                return ServerResponse.createSuccess(product);
+            }
+        }
+        return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
     }
 
     public int editProductStatus(@Param("id") Integer id, @Param("status") Integer status){

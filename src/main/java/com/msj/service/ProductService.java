@@ -18,6 +18,7 @@ public interface ProductService {
     ServerResponse getList(Integer pageNum,Integer pageSize,HttpSession session);
     ServerResponse search(String productName,Integer productId,Integer pageNum,Integer pageSize,
                           HttpSession session);
+    ServerResponse getDetail(Integer productId,HttpSession session);
 
     int editProductStatus(Integer id,Integer status);
     Product getProductById(Integer id);
