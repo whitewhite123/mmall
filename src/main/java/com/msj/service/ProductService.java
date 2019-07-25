@@ -20,10 +20,6 @@ public interface ProductService {
                           HttpSession session);
     ServerResponse getDetail(Integer id,HttpSession session);
     ServerResponse setSaleStatus(Integer id,Integer status);
+    ServerResponse save(Product product);
 
-
-
-    Product getProductById(Integer id);
-    int addProduct(Product product);
-    int editProduct(Product product);
 }

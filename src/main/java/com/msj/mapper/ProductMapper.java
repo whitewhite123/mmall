@@ -18,20 +18,10 @@ public interface ProductMapper {
 
     int updateProductStatus(@Param("id") Integer id, @Param("status") Integer status);
 
-
-
-
-    int deleteByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(ProductWithBLOBs record);
-
-    int updateByPrimaryKeyWithBLOBs(ProductWithBLOBs record);
-
-    int updateByPrimaryKey(Product record);
-
     int insertProduct(Product product);
 
-    int updateProduct(Product product);
+    int updateByPrimaryKeySelective(Product product);
+
 
 
 

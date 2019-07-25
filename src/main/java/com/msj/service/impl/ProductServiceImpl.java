@@ -93,20 +93,31 @@ public class ProductServiceImpl implements ProductService{
         return ServerResponse.createByErrorMessage(ManageConst.UPDATE_STATUS_ERROR);//修改产品状态失败
     }
 
-    public Product getProductById(Integer id){
-        return productMapper.selectByPrimaryKey(id);
+    //新增OR更新产品
+    public ServerResponse save(Product product) {
+        Integer id = product.getId();
+        Product pro = productMapper.selectByPrimaryKey(id);
+        if(pro == null){
+            //新增
+            product.setCreateTime(new Date());
+            product.setUpdateTime(new Date());
+            int resultCount = productMapper.insertProduct(product);
+            if(resultCount>0){
+                return ServerResponse.createBySuccessMessage(ManageConst.INSERT_PRODUCT_SUCCESS);//新增产品成功
+            }
+
+        }
+        //更新
+        product.setCreateTime(pro.getCreateTime());
+        product.setUpdateTime(new Date());
+        int resultCount = productMapper.updateByPrimaryKeySelective(product);
+        if(resultCount>0){
+            return ServerResponse.createBySuccessMessage(ManageConst.UPDATE_PRODUCT_SUCCESS);//更新产品成功
+        }
+        return ServerResponse.createByErrorMessage(ManageConst.UPDATE_STATUS_ERROR);//
+
     }
 
-    public int addProduct(Product product){
-        product.setCreateTime(new Date());
-        product.setUpdateTime(new Date());
-        return productMapper.insertProduct(product);
-    }
-
-    public int editProduct(Product product){
-        product.setUpdateTime(new Date());
-        return productMapper.updateProduct(product);
-    }
 
 
 }

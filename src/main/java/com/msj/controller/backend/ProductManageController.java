@@ -63,32 +63,11 @@ public class ProductManageController {
         return productService.setSaleStatus(productId,status);
     }
 
-    /**
-     * 新增OR更新产品
-     * @param product
-     * @return
-     */
+    //新增或者更新产品
     @RequestMapping("/save.do")
     @ResponseBody
     public ServerResponse save(Product product){
-        //todo 新增OR更新产品出错
-        Integer id = product.getId();
-        System.out.println(id);
-        Product pro = productService.getProductById(id);
-        System.out.println(pro);
-        if(pro!=null){
-            int num = productService.editProduct(pro);
-            System.out.println("更新"+num);
-            if(num>0){
-                return ServerResponse.createBySuccessMessage(ManageConst.UPDATE_STATUS_SUCCESS);
-            }
-        }
-        int num = productService.addProduct(product);
-        System.out.println("新增"+num);
-        if(num>0){
-            return ServerResponse.createBySuccessMessage(ManageConst.INSERT_PRODUCT_SUCCESS);
-        }
-        return ServerResponse.createByErrorMessage(ManageConst.UPDATE_STATUS_ERROR);
+        return productService.save(product);
 
 
     }
