@@ -14,7 +14,11 @@ public interface ProductMapper {
 
     List<Product> selectAllProducts();
 
-    List<Product> selectByType(@Param("productName")String productName,@Param("productId")Integer productId);
+    List<Product> selectByType(@Param("productName")String productName,@Param("id")Integer id);
+
+    int updateProductStatus(@Param("id") Integer id, @Param("status") Integer status);
+
+
 
 
     int deleteByPrimaryKey(Integer id);
@@ -24,8 +28,6 @@ public interface ProductMapper {
     int updateByPrimaryKeyWithBLOBs(ProductWithBLOBs record);
 
     int updateByPrimaryKey(Product record);
-
-    int updateProductStatus(@Param("id") Integer id, @Param("status") Integer status);
 
     int insertProduct(Product product);
 

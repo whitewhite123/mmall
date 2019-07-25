@@ -56,20 +56,11 @@ public class ProductManageController {
         return productService.getDetail(productId,session);
     }
 
-    /**
-     * 产品上下架
-     * @param productId
-     * @param status
-     * @return
-     */
+    //产品上下架
     @RequestMapping("/set_sale_status.do")
     @ResponseBody
-    public ServerResponse setStatus(Integer productId,Integer status){
-        int num = productService.editProductStatus(productId, status);
-        if(num>0){
-            return ServerResponse.createBySuccessMessage(ManageConst.UPDATE_STATUS_SUCCESS);
-        }
-        return ServerResponse.createByErrorMessage(ManageConst.UPDATE_STATUS_ERROR);
+    public ServerResponse setSaleStatus(Integer productId,Integer status){
+        return productService.setSaleStatus(productId,status);
     }
 
     /**

@@ -62,7 +62,7 @@
                 name = #{productName}
             </if>
             <if test="productId != null">
-                or id = #{productId}
+                or id = #{id}
             </if>
         </where>
     </select>

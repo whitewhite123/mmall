@@ -11,16 +11,18 @@ import java.util.List;
 
 public interface ProductService {
     //门户
-    ServerResponse getProductDetail(Integer productId);
+    ServerResponse getProductDetail(Integer id);
     ServerResponse getProductList(Integer pageNum,Integer pageSize,Integer categoryId,String orderBy);
 
     //后台
     ServerResponse getList(Integer pageNum,Integer pageSize,HttpSession session);
-    ServerResponse search(String productName,Integer productId,Integer pageNum,Integer pageSize,
+    ServerResponse search(String productName,Integer id,Integer pageNum,Integer pageSize,
                           HttpSession session);
-    ServerResponse getDetail(Integer productId,HttpSession session);
+    ServerResponse getDetail(Integer id,HttpSession session);
+    ServerResponse setSaleStatus(Integer id,Integer status);
 
-    int editProductStatus(Integer id,Integer status);
+
+
     Product getProductById(Integer id);
     int addProduct(Product product);
     int editProduct(Product product);

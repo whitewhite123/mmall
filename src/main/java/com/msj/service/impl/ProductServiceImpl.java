@@ -59,10 +59,10 @@ public class ProductServiceImpl implements ProductService{
     }
 
     //产品搜素
-    public ServerResponse search(String productName,Integer productId, Integer pageNum,
+    public ServerResponse search(String productName,Integer id, Integer pageNum,
                                  Integer pageSize,HttpSession session) {
         if(session.getAttribute("user")!=null){
-            List<Product> productList = productMapper.selectByType(productName, productId);
+            List<Product> productList = productMapper.selectByType(productName,id);
             if(productList!=null){
                 PageHelper.startPage(pageNum,pageSize);
                 PageInfo<Product> productPageInfo = new PageInfo<Product>(productList);
@@ -74,9 +74,9 @@ public class ProductServiceImpl implements ProductService{
     }
 
     //产品详情
-    public ServerResponse getDetail(Integer productId, HttpSession session) {
+    public ServerResponse getDetail(Integer id, HttpSession session) {
         if(session.getAttribute("user")!=null){
-            Product product = productMapper.selectByPrimaryKey(productId);
+            Product product = productMapper.selectByPrimaryKey(id);
             if(product!=null){
                 return ServerResponse.createSuccess(product);
             }
@@ -84,8 +84,13 @@ public class ProductServiceImpl implements ProductService{
         return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
     }
 
-    public int editProductStatus(@Param("id") Integer id, @Param("status") Integer status){
-        return productMapper.updateProductStatus(id,status);
+    //产品上下架
+    public ServerResponse setSaleStatus(@Param("id") Integer id, @Param("status") Integer status){
+        int resultCount = productMapper.updateProductStatus(id,status);
+        if(resultCount>0){
+            return ServerResponse.createBySuccessMessage(ManageConst.UPDATE_STATUS_SUCCESS);//修改产品状态成功
+        }
+        return ServerResponse.createByErrorMessage(ManageConst.UPDATE_STATUS_ERROR);//修改产品状态失败
     }
 
     public Product getProductById(Integer id){
