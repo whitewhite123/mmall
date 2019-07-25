@@ -31,22 +31,15 @@ public class ProductManageController {
         return productService.getList(pageNum,pageSize,session);
     }
 
-    /**
-     * 产品搜素
-     * @param productName
-     * @param productId
-     * @param pageNum
-     * @param pageSize
-     * @return
-     */
+    //产品搜素
     @RequestMapping("/search.do")
     @ResponseBody
-    public ServerResponse search(@RequestParam("productName")String productName,
-                                 @RequestParam("productId") Integer productId,
+    public ServerResponse search(@RequestParam(value = "productName",required = false)String productName,
+                                 @RequestParam(value = "productId",required = false) Integer productId,
                                  @RequestParam(value = "pageNum",defaultValue ="1")Integer pageNum,
-                                 @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize){
-        //todo 根据产品的productName和productId进行搜素
-        return null;
+                                 @RequestParam(value = "pageSize",defaultValue = "10")Integer pageSize,
+                                 HttpSession session){
+        return productService.search(productName,productId,pageNum,pageSize,session);
     }
 
     @RequestMapping("/upload.do")

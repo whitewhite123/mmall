@@ -54,6 +54,19 @@
         select <include refid="products"/> from mmall_product
     </select>
 
+    <select id="selectByType" resultMap="BaseResultMap">
+        select <include refid="products"/>
+        from mmall_product
+        <where>
+            <if test="productName != null">
+                name = #{productName}
+            </if>
+            <if test="productId != null">
+                or id = #{productId}
+            </if>
+        </where>
+    </select>
+
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from mmall_product

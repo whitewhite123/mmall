@@ -58,6 +58,21 @@ public class ProductServiceImpl implements ProductService{
         return ServerResponse.createByErrorMessage(ManageConst.GETPRODUCT_ERROR);//用户未登录，请先登录
     }
 
+    //产品搜素
+    public ServerResponse search(String productName,Integer productId, Integer pageNum,
+                                 Integer pageSize,HttpSession session) {
+        if(session.getAttribute("user")!=null){
+            List<Product> productList = productMapper.selectByType(productName, productId);
+            if(productList!=null){
+                PageHelper.startPage(pageNum,pageSize);
+                PageInfo<Product> productPageInfo = new PageInfo<Product>(productList);
+                return ServerResponse.createSuccess(productPageInfo);
+            }
+        }
+
+        return ServerResponse.createByErrorMessage(Const.UPDATE_INFORMATION_ERROR);//用户未登录
+    }
+
     public int editProductStatus(@Param("id") Integer id, @Param("status") Integer status){
         return productMapper.updateProductStatus(id,status);
     }

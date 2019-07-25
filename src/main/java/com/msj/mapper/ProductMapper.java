@@ -14,6 +14,9 @@ public interface ProductMapper {
 
     List<Product> selectAllProducts();
 
+    List<Product> selectByType(@Param("productName")String productName,@Param("productId")Integer productId);
+
+
     int deleteByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(ProductWithBLOBs record);
