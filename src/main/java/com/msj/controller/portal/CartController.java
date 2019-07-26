@@ -41,6 +41,19 @@ public class CartController {
         return cartService.update(productId,count,session);
     }
 
+    //移出某个商品
+    @RequestMapping("/delete_product.do")
+    @ResponseBody
+    public ServerResponse deleteProduct(Integer productId,HttpSession session){
+        return cartService.delete(productId,session);
+    }
+
+    //购物车选中某个商品
+    @RequestMapping("/select.do")
+    @ResponseBody
+    public ServerResponse select(Integer productId,HttpSession session){
+        return cartService.select(productId,session);
+    }
 
 }
 

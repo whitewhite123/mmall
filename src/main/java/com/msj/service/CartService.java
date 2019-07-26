@@ -10,4 +10,6 @@ public interface CartService {
     ServerResponse getCartProductList(HttpSession session);
     ServerResponse add(Integer productId,Integer count,HttpSession session);
     ServerResponse update(Integer productId,Integer count,HttpSession session);
+    ServerResponse delete(Integer productId,HttpSession session);
+    ServerResponse select(Integer productId,HttpSession session);
 }

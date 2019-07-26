@@ -111,10 +111,15 @@
     </insert>
 
 
+    <delete id="deleteByProductId" parameterType="java.lang.Integer">
+        delete from mmall_cart
+        where product_id = #{productId,jdbcType=INTEGER}
+    </delete>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from mmall_cart
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+        delete from mmall_cart
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
 
     <update id="updateByPrimaryKey" parameterType="com.msj.pojo.Cart">
         update mmall_cart

@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService{
         return ServerResponse.createByErrorMessage(Const.illegalArgument);
     }
 
-    public ServerResponse getCheckResult(User user) {
+    private ServerResponse getCheckResult(User user) {
         if (user != null) {
             //如果不为空，说明有这一行，用户已存在
             return ServerResponse.createByErrorMessage(Const.REGISTER_ERROR_MESSAGE);

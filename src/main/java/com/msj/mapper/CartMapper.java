@@ -22,6 +22,8 @@ public interface CartMapper {
 
     List<CartProductVo> selectCartProduct(Integer userId);
 
+    int deleteByProductId(Integer productId);
+
     int insertCart(Cart cart);
 
     int updateByPrimaryKey(Integer id);

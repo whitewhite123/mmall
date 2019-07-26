@@ -78,7 +78,7 @@ public class CartServiceImpl implements CartService{
     }
 
     //更新购物车某个产品数量
-    public ServerResponse update(Integer productId,Integer count,HttpSession session){
+    public ServerResponse update(Integer productId,Integer count,HttpSession session) {
         //1、判断是否登录
         User user = (User)session.getAttribute("user");
         if(user == null){
@@ -102,6 +102,38 @@ public class CartServiceImpl implements CartService{
         return ServerResponse.createSuccess(cartVo);
     }
 
+    //移出某个商品
+    public ServerResponse delete(Integer productId,HttpSession session){
+        //1、用户是否登录
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.GETINFORMATION_ERROR.getCode(),
+                    ResponseCode.GETINFORMATION_ERROR.getDesc());//用户未登录
+        }
+        //2、删除购物车商品
+        Integer resultCount = cartMapper.deleteByProductId(productId);
+        if(resultCount < 0){
+            return ServerResponse.createBySuccessMessage(Const.DELETE_PRODUCT_FAIL);
+        }
+        //3、查询cartProductVo
+        List<CartProductVo> cartProductVoList = cartMapper.selectCartProduct(user.getId());
+        //4、整合cartProductVo
+        cartProductVoList = assembleCartProductVo(cartProductVoList);
+        //5、整合cartVo
+        CartVo cartVo = assembleCartVo(cartProductVoList, user.getId());
+        return ServerResponse.createSuccess(cartVo);
+    }
+
+    //购物车选中某个商品
+    public ServerResponse select(Integer productId,HttpSession session){
+        //1、用户是否登录
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.GETINFORMATION_ERROR.getCode(),
+                    ResponseCode.GETINFORMATION_ERROR.getDesc());//用户未登录
+        }
+        return null;
+    }
 
     //整合cartVo
     private CartVo assembleCartVo(List<CartProductVo> cartProductVoList,Integer userId){
