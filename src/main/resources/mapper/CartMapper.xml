@@ -2,41 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.msj.mapper.CartMapper">
     <resultMap id="BaseResultMap" type="com.msj.pojo.Cart">
-        <id column="cid" property="id" jdbcType="INTEGER"/>
+        <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="user_id" property="userId" jdbcType="INTEGER"/>
         <result column="product_id" property="productId" jdbcType="INTEGER"/>
         <result column="quantity" property="quantity" jdbcType="INTEGER"/>
         <result column="checked" property="checked" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
-        <association property="product" column="productId" javaType="com.msj.pojo.Product">
-            <id property="id" column="pid" javaType="Integer"/>
-            <result column="category_id" property="categoryId" javaType="Integer"/>
-            <result column="name" property="name" javaType="String"/>
-            <result column="subtitle" property="subtitle" javaType="String"/>
-            <result column="main_image" property="mainImage" javaType="String"/>
-            <result column="sub_images" property="subImages" javaType="String"/>
-            <result column="price" property="price" javaType="Double"/>
-            <result column="detail" property="detail" javaType="String"/>
-            <result column="status" property="status" javaType="Integer"/>
-            <result column="stock" property="stock" javaType="Integer"/>
-            <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
-            <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
-        </association>
     </resultMap>
+    <resultMap id="CartProductMap" type="com.msj.vo.CartProductVo">
+        <id column="cid" property="id" jdbcType="INTEGER"/>
+        <result column="uid" property="userId" jdbcType="INTEGER"/>
+        <result column="pid" property="productId" jdbcType="INTEGER"/>
+        <result column="quantity" property="quantity" jdbcType="INTEGER"/>
+        <result column="name" property="productName" javaType="String"/>
+        <result column="subtitle" property="productSubtitle" javaType="String"/>
+        <result column="main_image" property="productMainImage" javaType="String"/>
+        <result column="price" property="productPrice" javaType="Double"/>
+        <result column="status" property="productStatus" javaType="Integer"/>
+        <result column="stock" property="productStock" javaType="Integer"/>
+        <result column="checked" property="productChecked" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Cart_Product_List">
+        cid,uid,pid,quantity,name,subtitle,main_image,price,status,stock,checked
+    </sql>
     <sql id="Base_Column_List">
-    id, user_id, product_id, quantity, checked, create_time, update_time
-  </sql>
+      id, user_id, product_id, quantity, checked, create_time, update_time
+    </sql>
+
+    <select id="selectProductByUserId" resultMap="BaseResultMap">
+        select <include refid="Cart_Product_List"/>
+        from mmall_cart c
+        left join mmall_product p
+        on p.id = c.product_id
+        where user_id = #{userId}
+    </select>
+
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from mmall_cart
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from mmall_cart
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.msj.pojo.Cart">
         update mmall_cart
         <set>
@@ -59,27 +68,63 @@
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </set>
+        where  id = #{id}
+    </update>
+
+
+    <select id="selectByUserIdAndProductId" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from mmall_cart
+        where user_id = #{userId} and product_id = #{productId}
+    </select>
+
+    <select id="selectCheckByUserId" parameterType="int" resultType="int">
+        select
+        count(*) as count
+        from mmall_cart
+        where user_id = #{userId} and checked = 0
+    </select>
+
+    <select id="selectCartTotalPriceByUserId" parameterType="int" resultType="double">
+        select
+        SUM(quantity*price)
+        FROM mmall_cart c
+        left JOIN mmall_product p
+        on c.product_id = p.id
+        where user_id = #{userId} and checked = 1
+    </select>
+
+
+    <select id="selectCartProduct" resultMap="CartProductMap">
+        select c.id,c.user_id uid,c.product_id pid,c.quantity,c.checked,
+        p.`name`,p.subtitle,p.main_image,p.price,p.`status`,p.stock
+        from mmall_cart c
+        left JOIN mmall_product p
+        on c.product_id = p.id
+    </select>
+
+    <insert id="insertCart" parameterType="map">
+        insert into mmall_cart (user_id,product_id,quantity,create_time,update_time)
+        values (#{userId},#{productId},#{quantity},#{createTime},#{updateTime})
+    </insert>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mmall_cart
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+    <update id="updateByPrimaryKey" parameterType="com.msj.pojo.Cart">
+        update mmall_cart
+        set user_id = #{userId,jdbcType=INTEGER},
+          product_id = #{productId,jdbcType=INTEGER},
+          quantity = #{quantity,jdbcType=INTEGER},
+          checked = #{checked,jdbcType=INTEGER},
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+          update_time = #{updateTime,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.msj.pojo.Cart">
-    update mmall_cart
-    set user_id = #{userId,jdbcType=INTEGER},
-      product_id = #{productId,jdbcType=INTEGER},
-      quantity = #{quantity,jdbcType=INTEGER},
-      checked = #{checked,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
 
-    <select id="selectProductByUserId" resultMap="BaseResultMap">
-        select  c.id cid, c.user_id, c.product_id, c.quantity,
-        c.checked,c.create_time, c.update_time,
-        p.id pid,p.category_id,p.name,p.subtitle,p.main_image,p.sub_images,
-        p.price,p.status,p.detail,p.stock,p.create_time,p.update_time
-        from mmall_cart c
-        left join mmall_product p
-        on p.id = c.product_id
-        where user_id = #{userId}
-    </select>
+
 </mapper>

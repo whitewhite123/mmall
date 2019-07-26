@@ -240,8 +240,8 @@ public class UserServiceImpl implements UserService{
             //如果role不为1（管理员），说明没有权限
             return ServerResponse.createByErrorMessage(ManageConst.GETLIST_ERROR);
         }
-        return ServerResponse.createByErrorCodeMessage(ResponseCode.MANAGE_LOGIN_ERROR.getCode(),
-                ResponseCode.MANAGE_LOGIN_ERROR.getDesc());//用户未登录,请登录
+        return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN_ERROR.getCode(),
+                ResponseCode.NEED_LOGIN_ERROR.getDesc());//用户未登录,请登录
 
     }
 }

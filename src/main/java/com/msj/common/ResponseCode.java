@@ -8,7 +8,7 @@ public enum ResponseCode {
     GETINFORMATION_ERROR(10,"用户未登录,无法获取当前用户信息,status=10,强制登录"),
 
     //后台--用户接口
-    MANAGE_LOGIN_ERROR(10,"用户未登录,请登录");
+    NEED_LOGIN_ERROR(10,"用户未登录,请登录");
 
 
     private final int code;

@@ -86,4 +86,18 @@ public class Cart {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                ", checked=" + checked +
+                ", product=" + product +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }

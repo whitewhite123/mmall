@@ -1,7 +1,10 @@
 package com.msj.mapper;
 
 import com.msj.pojo.Cart;
+import com.msj.vo.CartProductVo;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CartMapper {
@@ -9,9 +12,20 @@ public interface CartMapper {
 
     Cart selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Cart record);
+    int updateByPrimaryKeySelective(Cart cart);
 
-    int updateByPrimaryKey(Cart record);
+    Cart selectByUserIdAndProductId(@Param("userId") Integer userId,@Param("productId") Integer productId);
+
+    Integer selectCheckByUserId(Integer userId);
+
+    Double selectCartTotalPriceByUserId(Integer userId);
+
+    List<CartProductVo> selectCartProduct();
+
+    int insertCart(Cart cart);
+
+    int updateByPrimaryKey(Integer id);
 
     List<Cart> selectProductByUserId(Integer userId);
+
 }

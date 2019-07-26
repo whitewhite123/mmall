@@ -11,7 +11,8 @@ public class Const {
     //参数错误
     public static final String illegalArgument = "参数不合法";
 
-//    门户--用户接口
+/* 门户  */
+// 用户接口
     public static final String REGISTER_SUCCESS_MESSAGE = "校验成功";
     public static final String REGISTER_ERROR_MESSAGE = "用户已存在";
     public static final String REGISTER_ILLEGAL_MESSAGE = "注册信息不合法";
@@ -35,9 +36,17 @@ public class Const {
     public static final String LOGOUT_SUCCESS = "退出成功";
     public static final String LOGOUT_ERROR = "服务端异常";
 
-//    后台--用户接口
-    public static final String MANAGE_LOGIN_ERROR = "用户未登录,请登录";
 
 //    产品接口
     public static final String PRODUCT_DETAIL_ERROR = "该商品已下架或删除";
+
+//    购物车接口
+    public static final String LIMIT_QUANTITY_SUCCESS = "LIMIT_NUM_SUCCESS";
+    public static final String LIMIT_QUANTITY_FAIL = "LIMIT_NUM_FAIL";
+    public static final String ADD_PRODUCT_SUCCESS="成功加入购物车";
+    public static final String ADD_PRODUCT_FAIL = "新增购物车失败";
+    public static final String UPDATE_PRODUCT_SUCCESS="成功更新购物车";
+    public static final String UPDATE_PRODUCT_FAIL = "更新购物车失败";
+    public static final String CARTLIST_EMPTY= "购物车为空";
+
 }

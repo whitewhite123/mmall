@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.rmi.ServerError;
 import java.util.List;
 
 @Controller
@@ -24,6 +25,13 @@ public class CartController {
     @ResponseBody
     public ServerResponse list(HttpSession session){
         return cartService.getCartProductList(session);
+    }
+
+    //购物车添加商品
+    @RequestMapping("/add.do")
+    @ResponseBody
+    public ServerResponse add(Integer productId,Integer count,HttpSession session){
+        return cartService.add(productId,count,session);
     }
 }
 

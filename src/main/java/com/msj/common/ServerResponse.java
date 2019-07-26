@@ -33,6 +33,10 @@ public class ServerResponse {
         this.data = data;
     }
 
+    private ServerResponse(int status) {
+        this.status = status;
+    }
+
     /**
      * 构造函数
      * @param status 状态码
@@ -43,7 +47,9 @@ public class ServerResponse {
         this.msg = msg;
     }
 
+    public void A(){
 
+    }
     //成功
     /**
      * @param data 自定义data
@@ -51,6 +57,10 @@ public class ServerResponse {
      */
     public static ServerResponse createSuccess(Object data){
         return new ServerResponse(Const.SUCCESS_CODE,data);
+    }
+
+    public static ServerResponse createSuccess(){
+        return new ServerResponse(Const.SUCCESS_CODE);
     }
 
     /**
@@ -89,5 +99,10 @@ public class ServerResponse {
      */
     public boolean error(){
         return this.status == Const.ERROR_CODE;
+    }
+
+
+    public boolean success() {
+        return this.status == Const.SUCCESS_CODE;//0代表成功
     }
 }
