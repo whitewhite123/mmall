@@ -102,11 +102,12 @@
         from mmall_cart c
         left JOIN mmall_product p
         on c.product_id = p.id
+        where c.user_id = #{userId}
     </select>
 
     <insert id="insertCart" parameterType="map">
-        insert into mmall_cart (user_id,product_id,quantity,create_time,update_time)
-        values (#{userId},#{productId},#{quantity},#{createTime},#{updateTime})
+        insert into mmall_cart (user_id,product_id,quantity,checked,create_time,update_time)
+        values (#{userId},#{productId},#{quantity},#{checked},#{createTime},#{updateTime})
     </insert>
 
 

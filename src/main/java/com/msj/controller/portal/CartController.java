@@ -33,5 +33,14 @@ public class CartController {
     public ServerResponse add(Integer productId,Integer count,HttpSession session){
         return cartService.add(productId,count,session);
     }
+
+    //购物车添加商品
+    @RequestMapping("/update.do")
+    @ResponseBody
+    public ServerResponse update(Integer productId,Integer count,HttpSession session){
+        return cartService.update(productId,count,session);
+    }
+
+
 }
 

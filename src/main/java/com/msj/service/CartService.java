@@ -9,4 +9,5 @@ import java.util.List;
 public interface CartService {
     ServerResponse getCartProductList(HttpSession session);
     ServerResponse add(Integer productId,Integer count,HttpSession session);
+    ServerResponse update(Integer productId,Integer count,HttpSession session);
 }

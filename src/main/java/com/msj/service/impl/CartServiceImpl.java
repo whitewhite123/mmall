@@ -29,10 +29,11 @@ public class CartServiceImpl implements CartService{
         //1、判断用户是否登录
         User user = (User)session.getAttribute("user");
         if(user == null){
-            return ServerResponse.createByErrorMessage(Const.NEED_LOGIN_ERROR);//用户未登录
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.GETINFORMATION_ERROR.getCode(),
+                    ResponseCode.GETINFORMATION_ERROR.getDesc());//用户未登录
         }
-        //2、查询cartProductVo
-        List<CartProductVo> cartProductVoList = cartMapper.selectCartProduct();
+        //2、查询cartProductVo,根据userId查询个人购物车列表
+        List<CartProductVo> cartProductVoList = cartMapper.selectCartProduct(user.getId());
         //3、整合cartProductVo
         cartProductVoList = assembleCartProductVo(cartProductVoList);
         //4、整合cartVo
@@ -67,7 +68,7 @@ public class CartServiceImpl implements CartService{
             }
         }
         // 3.查询CartProductVo
-        List<CartProductVo> cartProductVoList = cartMapper.selectCartProduct();
+        List<CartProductVo> cartProductVoList = cartMapper.selectCartProduct(user.getId());
         //4.整合CartProductVo
         cartProductVoList = assembleCartProductVo(cartProductVoList);
 
@@ -75,6 +76,32 @@ public class CartServiceImpl implements CartService{
         CartVo cartVo = assembleCartVo(cartProductVoList,user.getId());
         return ServerResponse.createSuccess(cartVo);
     }
+
+    //更新购物车某个产品数量
+    public ServerResponse update(Integer productId,Integer count,HttpSession session){
+        //1、判断是否登录
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.GETINFORMATION_ERROR.getCode(),
+                    ResponseCode.GETINFORMATION_ERROR.getDesc());//用户未登录
+        }
+        //2、更新购物车产品数量
+        Cart cart = cartMapper.selectByUserIdAndProductId(user.getId(), productId);
+        cart.setQuantity(count);
+        cart.setUpdateTime(new Date());
+        int resultCount = cartMapper.updateByPrimaryKeySelective(cart);
+        if(resultCount < 0){//更新不成功，返回错误标识
+            return ServerResponse.createByErrorMessage(Const.UPDATE_PRODUCT_FAIL);
+        };
+        //3、查询cartProductVo
+        List<CartProductVo> cartProductVoList = cartMapper.selectCartProduct(user.getId());
+        //4、整合cartProductVo
+        cartProductVoList = assembleCartProductVo(cartProductVoList);
+        //5、整合cartVo
+        CartVo cartVo = assembleCartVo(cartProductVoList,user.getId());
+        return ServerResponse.createSuccess(cartVo);
+    }
+
 
     //整合cartVo
     private CartVo assembleCartVo(List<CartProductVo> cartProductVoList,Integer userId){
@@ -107,7 +134,7 @@ public class CartServiceImpl implements CartService{
         return cartProductVoList;
     }
 
-    //查询购物车
+    //更新购物车
     private ServerResponse updateCart(Integer userId,Integer productId,Integer count){
         Cart cart = cartMapper.selectByUserIdAndProductId(userId, productId);
         cart.setQuantity(cart.getQuantity()+count);

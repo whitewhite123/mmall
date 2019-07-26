@@ -20,7 +20,7 @@ public interface CartMapper {
 
     Double selectCartTotalPriceByUserId(Integer userId);
 
-    List<CartProductVo> selectCartProduct();
+    List<CartProductVo> selectCartProduct(Integer userId);
 
     int insertCart(Cart cart);
 
