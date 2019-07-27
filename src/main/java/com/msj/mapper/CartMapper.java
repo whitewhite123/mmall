@@ -26,13 +26,19 @@ public interface CartMapper {
 
     int insertCart(Cart cart);
 
-    int updateCheckedByProductId(@Param("productId")Integer productId,@Param("userId") Integer userId,
+    int updateChecked1ByPidAndUid(@Param("productId")Integer productId,@Param("userId") Integer userId,
                                  @Param("updateTime")Date updateTime);
 
-    int updateCheckedByPid(@Param("productId")Integer productId,@Param("userId") Integer userId,
+    int updateChecked0ByPidAndUid(@Param("productId")Integer productId,@Param("userId") Integer userId,
                            @Param("updateTime")Date updateTime);
 
     List<CartProductVo> selectCartProductByUidAndPid(@Param("userId") Integer userId,@Param("productId") Integer productId);
+
+    int selectCartProductCount(Integer userId);
+
+    int updateChecked1ByUid(@Param("userId") Integer userId,@Param("updateTime")Date updateTime);
+
+    int updateChecked0ByUid(@Param("userId") Integer userId,@Param("updateTime")Date updateTime);
 
     int updateByPrimaryKey(Integer id);
 

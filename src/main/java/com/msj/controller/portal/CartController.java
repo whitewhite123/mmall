@@ -56,11 +56,31 @@ public class CartController {
     }
 
     //取消购物车选中某个商品
-    @RequestMapping("/unselect.do")
+    @RequestMapping("/un_select.do")
     @ResponseBody
-    public ServerResponse unselect(Integer productId,HttpSession session){
-        return cartService.unselect(productId,session);
+    public ServerResponse unSelect(Integer productId,HttpSession session){
+        return cartService.unSelect(productId,session);
     }
 
+    //查询在购物车里的产品数量
+    @RequestMapping("/get_cart_product_count.do")
+    @ResponseBody
+    public ServerResponse getCartProductCount(HttpSession session){
+        return cartService.getCartProductCount(session);
+    }
+
+    //购物车全选
+    @RequestMapping("/select_all.do")
+    @ResponseBody
+    public ServerResponse selectAll(HttpSession session){
+        return cartService.selectAll(session);
+    }
+
+    //购物车取消全选
+    @RequestMapping("/un_select_all.do")
+    @ResponseBody
+    public ServerResponse unSelectAll(HttpSession session){
+        return cartService.unSelectAll(session);
+    }
 }
 
