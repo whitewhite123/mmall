@@ -49,5 +49,6 @@ public class Const {
     public static final String UPDATE_PRODUCT_FAIL = "更新购物车失败";
     public static final String CARTLIST_EMPTY= "购物车为空";
     public static final String DELETE_PRODUCT_FAIL= "商品移出失败";
+    public static final String SELETE_PRODUCT_FAIL= "选中商品失败";
 
 }

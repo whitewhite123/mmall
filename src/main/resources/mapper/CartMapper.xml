@@ -103,12 +103,33 @@
         left JOIN mmall_product p
         on c.product_id = p.id
         where c.user_id = #{userId}
+
     </select>
 
     <insert id="insertCart" parameterType="map">
         insert into mmall_cart (user_id,product_id,quantity,checked,create_time,update_time)
         values (#{userId},#{productId},#{quantity},#{checked},#{createTime},#{updateTime})
     </insert>
+
+    <update id="updateCheckedByProductId" parameterType="map">
+        update mmall_cart set checked=1 and update_time = #{updateTime}
+        where product_id = #{productId} and user_id = #{userId}
+    </update>
+
+    <update id="updateCheckedByPid" parameterType="map">
+        update mmall_cart set checked=0 and update_time = #{updateTime}
+        where product_id = #{productId} and user_id = #{userId}
+    </update>
+
+    <select id="selectCartProductByUidAndPid" resultMap="CartProductMap">
+        select c.id,c.user_id uid,c.product_id pid,c.quantity,c.checked,
+        p.`name`,p.subtitle,p.main_image,p.price,p.`status`,p.stock
+        from mmall_cart c
+        left JOIN mmall_product p
+        on c.product_id = p.id
+        where c.user_id = #{userId} and c.product_id = #{productId}
+    </select>
+
 
 
     <delete id="deleteByProductId" parameterType="java.lang.Integer">

@@ -55,5 +55,12 @@ public class CartController {
         return cartService.select(productId,session);
     }
 
+    //取消购物车选中某个商品
+    @RequestMapping("/unselect.do")
+    @ResponseBody
+    public ServerResponse unselect(Integer productId,HttpSession session){
+        return cartService.unselect(productId,session);
+    }
+
 }
 

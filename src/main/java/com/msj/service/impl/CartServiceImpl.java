@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService{
         //2、查询cartProductVo,根据userId查询个人购物车列表
         List<CartProductVo> cartProductVoList = cartMapper.selectCartProduct(user.getId());
         //3、整合cartProductVo
-        cartProductVoList = assembleCartProductVo(cartProductVoList);
+        cartProductVoList = assembleCartProductVoList(cartProductVoList);
         //4、整合cartVo
         CartVo cartVo = assembleCartVo(cartProductVoList, user.getId());
         if(cartVo == null){
@@ -70,7 +70,7 @@ public class CartServiceImpl implements CartService{
         // 3.查询CartProductVo
         List<CartProductVo> cartProductVoList = cartMapper.selectCartProduct(user.getId());
         //4.整合CartProductVo
-        cartProductVoList = assembleCartProductVo(cartProductVoList);
+        cartProductVoList = assembleCartProductVoList(cartProductVoList);
 
         //5.整合cartVo
         CartVo cartVo = assembleCartVo(cartProductVoList,user.getId());
@@ -96,7 +96,7 @@ public class CartServiceImpl implements CartService{
         //3、查询cartProductVo
         List<CartProductVo> cartProductVoList = cartMapper.selectCartProduct(user.getId());
         //4、整合cartProductVo
-        cartProductVoList = assembleCartProductVo(cartProductVoList);
+        cartProductVoList = assembleCartProductVoList(cartProductVoList);
         //5、整合cartVo
         CartVo cartVo = assembleCartVo(cartProductVoList,user.getId());
         return ServerResponse.createSuccess(cartVo);
@@ -118,7 +118,7 @@ public class CartServiceImpl implements CartService{
         //3、查询cartProductVo
         List<CartProductVo> cartProductVoList = cartMapper.selectCartProduct(user.getId());
         //4、整合cartProductVo
-        cartProductVoList = assembleCartProductVo(cartProductVoList);
+        cartProductVoList = assembleCartProductVoList(cartProductVoList);
         //5、整合cartVo
         CartVo cartVo = assembleCartVo(cartProductVoList, user.getId());
         return ServerResponse.createSuccess(cartVo);
@@ -132,7 +132,42 @@ public class CartServiceImpl implements CartService{
             return ServerResponse.createByErrorCodeMessage(ResponseCode.GETINFORMATION_ERROR.getCode(),
                     ResponseCode.GETINFORMATION_ERROR.getDesc());//用户未登录
         }
-        return null;
+        //2、选中商品，更新checked=1
+        Date updateTime = new Date();
+        int resultCount = cartMapper.updateCheckedByProductId(productId, user.getId(),updateTime);
+        if(resultCount < 0){
+            return ServerResponse.createByErrorMessage(Const.SELETE_PRODUCT_FAIL);
+        }
+        //3、查询cartProductVo
+        List<CartProductVo> cartProductVoList = cartMapper.selectCartProductByUidAndPid(user.getId(), productId);
+        //4、整合cartProductVo
+        cartProductVoList = assembleCartProductVoList(cartProductVoList);
+        //5、整合cartVo
+        CartVo cartVo = assembleCartVo(cartProductVoList,user.getId());
+        return ServerResponse.createSuccess(cartVo);
+    }
+
+    //取消选中的商品
+    public ServerResponse unselect(Integer productId,HttpSession session){
+        //1、用户是否登录
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.GETINFORMATION_ERROR.getCode(),
+                    ResponseCode.GETINFORMATION_ERROR.getDesc());//用户未登录
+        }
+        //2、选中商品，更新checked=0
+        Date updateTime = new Date();
+        int resultCount = cartMapper.updateCheckedByPid(productId, user.getId(),updateTime);
+        if(resultCount < 0){
+            return ServerResponse.createByErrorMessage(Const.SELETE_PRODUCT_FAIL);
+        }
+        //3、查询cartProductVo
+        List<CartProductVo> cartProductVoList = cartMapper.selectCartProductByUidAndPid(user.getId(), productId);
+        //4、整合cartProductVo
+        cartProductVoList = assembleCartProductVoList(cartProductVoList);
+        //5、整合cartVo
+        CartVo cartVo = assembleCartVo(cartProductVoList,user.getId());
+        return ServerResponse.createSuccess(cartVo);
     }
 
     //整合cartVo
@@ -150,8 +185,8 @@ public class CartServiceImpl implements CartService{
         return cartVo;
     }
 
-     //整合CartProductVo
-    private List<CartProductVo> assembleCartProductVo(List<CartProductVo> cartProductVoList){
+     //整合CartProductVoList
+    private List<CartProductVo> assembleCartProductVoList(List<CartProductVo> cartProductVoList){
         for (CartProductVo cartProductVoItem : cartProductVoList){
             double productPrice = cartProductVoItem.getProductPrice();
             int quantity = cartProductVoItem.getQuantity();
@@ -193,4 +228,6 @@ public class CartServiceImpl implements CartService{
         }
         return ServerResponse.createSuccess();
     }
+
+
 }
