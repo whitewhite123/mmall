@@ -1,8 +1,10 @@
 package com.msj.pojo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.math.BigDecimal;
 import java.util.Date;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Order {
     private Integer id;
 
@@ -16,9 +18,15 @@ public class Order {
 
     private Integer paymentType;
 
+    private String paymentTypeDesc;//支付类型
+
     private Integer postage;
 
     private Integer status;
+
+    private String statusDesc;//支付状态
+
+    private String receiveName; //用户
 
     private Date paymentTime;
 
@@ -142,5 +150,39 @@ public class Order {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    private OrderItem orderItem;
+
+    public String getPaymentTypeDesc() {
+        return paymentTypeDesc;
+    }
+
+    public void setPaymentTypeDesc(String paymentTypeDesc) {
+        this.paymentTypeDesc = paymentTypeDesc;
+    }
+
+    public String getStatusDesc() {
+        return statusDesc;
+    }
+
+    public void setStatusDesc(String statusDesc) {
+        this.statusDesc = statusDesc;
+    }
+
+    public OrderItem getOrderItem() {
+        return orderItem;
+    }
+
+    public void setOrderItem(OrderItem orderItem) {
+        this.orderItem = orderItem;
+    }
+
+    public String getReceiveName() {
+        return receiveName;
+    }
+
+    public void setReceiveName(String receiveName) {
+        this.receiveName = receiveName;
     }
 }

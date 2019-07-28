@@ -1,6 +1,11 @@
 package com.msj.common;
 
-public class Const {
+import com.fasterxml.jackson.core.util.InternCache;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class  Const {
 
     public static final int SUCCESS_CODE = 0;
     public static final int ERROR_CODE = 1;
@@ -50,5 +55,31 @@ public class Const {
     public static final String CARTLIST_EMPTY= "购物车为空";
     public static final String DELETE_PRODUCT_FAIL= "商品移出失败";
     public static final String SELETE_PRODUCT_FAIL= "选中商品失败";
+
+    //支付类型
+    public static final Map payType = new HashMap<Integer,String>();
+
+    //订单状态
+    public static final Map status = new HashMap<Integer,String>();
+
+    static{
+        payType.put(1,"在线支付");
+        status.put(0,"已取消");
+        status.put(10,"未付款");
+        status.put(20,"已付款");
+        status.put(40,"已发货");
+        status.put(50,"交易成功");
+        status.put(60,"交易关闭");
+    }
+
+//   收获地址接口
+    public static final String ADD_ADDRESS_SUCCESS = "新建地址成功";
+    public static final String ADD_ADDRESS_FAIL = "新建地址失败";
+    public static final String DEL_ADDRESS_SUCCESS = "删除地址成功";
+    public static final String DEL_ADDRESS_FAIL = "删除地址失败";
+    public static final String NEED_LOGIN = "请登录之后查询";
+    public static final String SELECT_ADDRESS_FAIL = "查询地址失败";
+    public static final String UPDATE_ADDRESS_FAIL = "更新地址失败";
+    public static final String UPDATE_ADDRESS_SUCCESS = "更新地址成功";
 
 }

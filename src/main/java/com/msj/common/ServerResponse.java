@@ -33,6 +33,12 @@ public class ServerResponse {
         this.data = data;
     }
 
+    private ServerResponse(int status,String msg,Object data) {
+        this.status = status;
+        this.msg = msg;
+        this.data = data;
+    }
+
     private ServerResponse(int status) {
         this.status = status;
     }
@@ -47,9 +53,7 @@ public class ServerResponse {
         this.msg = msg;
     }
 
-    public void A(){
 
-    }
     //成功
     /**
      * @param data 自定义data
@@ -63,6 +67,9 @@ public class ServerResponse {
         return new ServerResponse(Const.SUCCESS_CODE);
     }
 
+    public static ServerResponse createBySuccess(String msg,Object data){
+        return new ServerResponse(Const.SUCCESS_CODE,msg,data);
+    }
     /**
      *
      * @param msg  自定义消息

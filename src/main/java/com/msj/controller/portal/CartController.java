@@ -1,9 +1,5 @@
 package com.msj.controller.portal;
-
-import com.msj.common.Const;
 import com.msj.common.ServerResponse;
-import com.msj.pojo.Cart;
-import com.msj.pojo.User;
 import com.msj.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,9 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.rmi.ServerError;
-import java.util.List;
 
+//购物车
 @Controller
 @RequestMapping("/cart")
 public class CartController {
@@ -44,8 +39,8 @@ public class CartController {
     //移出某个商品
     @RequestMapping("/delete_product.do")
     @ResponseBody
-    public ServerResponse deleteProduct(Integer productId,HttpSession session){
-        return cartService.delete(productId,session);
+    public ServerResponse deleteProduct(String productIds,HttpSession session){
+        return cartService.delete(productIds,session);
     }
 
     //购物车选中某个商品

@@ -1,22 +1,17 @@
 package com.msj.controller.portal;
 
-import com.msj.common.Const;
-import com.msj.common.ResponseCode;
+
 import com.msj.common.ServerResponse;
 import com.msj.pojo.User;
 import com.msj.service.UserService;
-import com.msj.util.MD5Util;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
 
+//用户
 @Controller
 @RequestMapping("/user")
 public class UserController {

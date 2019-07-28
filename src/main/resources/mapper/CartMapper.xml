@@ -71,7 +71,6 @@
         where  id = #{id}
     </update>
 
-
     <select id="selectByUserIdAndProductId" parameterType="map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -79,14 +78,14 @@
         where user_id = #{userId} and product_id = #{productId}
     </select>
 
-    <select id="selectCheckByUserId" parameterType="int" resultType="int">
+    <select id="selectCheckByUserId" parameterType="int" resultType="java.lang.Integer">
         select
         count(*) as count
         from mmall_cart
         where user_id = #{userId} and checked = 0
     </select>
 
-    <select id="selectCartTotalPriceByUserId" parameterType="int" resultType="double">
+    <select id="selectCartTotalPriceByUserId" parameterType="int" resultType="java.lang.Double">
         select
         SUM(quantity*price)
         FROM mmall_cart c
@@ -94,7 +93,6 @@
         on c.product_id = p.id
         where user_id = #{userId} and checked = 1
     </select>
-
 
     <select id="selectCartProduct" resultMap="CartProductMap">
         select c.id,c.user_id uid,c.product_id pid,c.quantity,c.checked,
@@ -135,28 +133,6 @@
         where user_id = #{userId}
     </select>
 
-    <update id="updateChecked1ByUid" parameterType="map">
-        update mmall_cart set checked=1,update_time = #{updateTime}
-        where user_id = #{userId}
-    </update>
-
-    <update id="updateChecked0ByUid" parameterType="map">
-        update mmall_cart set checked=0,update_time = #{updateTime}
-        where user_id = #{userId}
-    </update>
-
-
-
-    <delete id="deleteByProductId" parameterType="java.lang.Integer">
-        delete from mmall_cart
-        where product_id = #{productId,jdbcType=INTEGER}
-    </delete>
-
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-        delete from mmall_cart
-        where id = #{id,jdbcType=INTEGER}
-    </delete>
-
     <update id="updateByPrimaryKey" parameterType="com.msj.pojo.Cart">
         update mmall_cart
         set user_id = #{userId,jdbcType=INTEGER},
@@ -168,5 +144,24 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
 
+    <update id="updateChecked0ByUid" parameterType="map">
+        update mmall_cart set checked=0,update_time = #{updateTime}
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteByProductId" parameterType="java.lang.Integer">
+        delete from mmall_cart
+        where product_id = #{productId,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateChecked1ByUid" parameterType="map">
+        update mmall_cart set checked=1,update_time = #{updateTime}
+        where user_id = #{userId}
+    </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from mmall_cart
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
 
 </mapper>

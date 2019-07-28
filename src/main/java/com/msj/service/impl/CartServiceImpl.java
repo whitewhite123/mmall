@@ -1,5 +1,6 @@
 package com.msj.service.impl;
 
+import com.google.common.base.Splitter;
 import com.msj.common.Const;
 import com.msj.common.ResponseCode;
 import com.msj.common.ServerResponse;
@@ -103,7 +104,7 @@ public class CartServiceImpl implements CartService{
     }
 
     //移出某个商品
-    public ServerResponse delete(Integer productId,HttpSession session){
+    public ServerResponse delete(String productIds,HttpSession session){
         //1、用户是否登录
         User user = (User)session.getAttribute("user");
         if(user == null){
@@ -111,10 +112,15 @@ public class CartServiceImpl implements CartService{
                     ResponseCode.GETINFORMATION_ERROR.getDesc());//用户未登录
         }
         //2、删除购物车商品
-        Integer resultCount = cartMapper.deleteByProductId(productId);
-        if(resultCount < 0){
-            return ServerResponse.createBySuccessMessage(Const.DELETE_PRODUCT_FAIL);
+        List<String> productIdList = Splitter.on(",").splitToList(productIds);
+        for(String pid:productIdList){
+            Integer productId = Integer.valueOf(pid);
+            Integer resultCount = cartMapper.deleteByProductId(productId);
+            if(resultCount < 0){
+                return ServerResponse.createBySuccessMessage(Const.DELETE_PRODUCT_FAIL);
+            }
         }
+
         //3、查询cartProductVo
         List<CartProductVo> cartProductVoList = cartMapper.selectCartProduct(user.getId());
         //4、整合cartProductVo

@@ -28,6 +28,9 @@
                 <value>classpath:mapper/UserMapper.xml</value>
                 <value>classpath:mapper/ProductMapper.xml</value>
                 <value>classpath:mapper/CartMapper.xml</value>
+                <value>classpath:mapper/OrderMapper.xml</value>
+                <value>classpath:mapper/OrderItemMapper.xml</value>
+                <value>classpath:mapper/ShippingMapper.xml</value>
             </list>
         </property>
         <property name="configLocation" value="classpath:mybatis.xml"/>
