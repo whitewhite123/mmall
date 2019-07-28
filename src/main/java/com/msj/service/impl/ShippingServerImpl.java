@@ -75,6 +75,7 @@ public class ShippingServerImpl implements ShippingServer{
         if(shippingDetail == null){
             return ServerResponse.createByErrorMessage(Const.SELECT_ADDRESS_FAIL);
         }
+        //3、更新地址
         shipping.setUpdateTime(new Date());
         int resultCount = shippingMapper.updateShipping(shipping);
         if(resultCount < 0){
@@ -106,6 +107,7 @@ public class ShippingServerImpl implements ShippingServer{
             return ServerResponse.createByErrorMessage(Const.NEED_LOGIN);//请登录之后查询
         }
         List<Shipping> shippingList = shippingMapper.selectAddressByUserId(user.getId());
+        //2、分页
         PageHelper.startPage(pageNum,pageSize);
         PageInfo<Shipping> shippingPageInfo = new PageInfo<Shipping>(shippingList);
         if(shippingPageInfo == null){

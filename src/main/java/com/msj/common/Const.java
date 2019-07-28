@@ -82,4 +82,5 @@ public class  Const {
     public static final String UPDATE_ADDRESS_FAIL = "更新地址失败";
     public static final String UPDATE_ADDRESS_SUCCESS = "更新地址成功";
 
+
 }
