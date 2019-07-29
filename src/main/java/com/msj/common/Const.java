@@ -60,7 +60,10 @@ public class  Const {
     public static final Map payType = new HashMap<Integer,String>();
 
     //订单状态
+    public static final String CREATE_ORDER_ERROR = "创建订单失败";
+    public static final String CREATE_ORDERITEM_ERROR = "创建订单详情失败";
     public static final Map status = new HashMap<Integer,String>();
+
 
     static{
         payType.put(1,"在线支付");
@@ -82,5 +85,14 @@ public class  Const {
     public static final String UPDATE_ADDRESS_FAIL = "更新地址失败";
     public static final String UPDATE_ADDRESS_SUCCESS = "更新地址成功";
 
+//    订单接口
+    public static final String SEL_ORDER_ERROR = "没有订单，无法查询订单信息";
 
+//    支付接口
+    public static final String SELECT_ORDER_ERROR = "没有找到订单";
+    public static final String PAY_ORDER_ERROR = "支付宝生成订单失败";
+    public static final String NO_ORDER = "该用户没有此订单";
+    public static final String CANCEL_ORDER_ERROR = "此订单已付款，无法被取消";
+    public static final String CANCEL_ERROR = "订单取消失败";
+    public static final String CANCEL_ORDER_SUCCESS = "成功取消订单";
 }

@@ -48,7 +48,24 @@
     where user_id=#{userId}
   </select>
 
+  <select id="selectOrderByUidAndOrderNo" resultMap="OrderMap" parameterType="map">
+      select <include refid="Order_Column_List"/>
+      from mmall_order
+      where user_id=#{userId} and order_no = #{orderNo}
+  </select>
 
+    <update id="updateStatusByUidAndOrderNo" parameterType="map">
+        update mmall_order
+        set status = 0
+        where user_id=#{userId} and order_no = #{orderNo}
+    </update>
+
+    <insert id="addOrder" parameterType="map">
+        insert into mmall_order(order_no,user_id,shipping_id, payment, payment_type, postage, status,
+        payment_time,send_time, end_time, close_time, create_time, update_time)
+        values (#{orderNo},#{userId},#{shippingId}, #{payment}, #{paymentType}, #{postage},#{status},
+        #{paymentTime},#{sendTime}, #{endTime}, #{closeTime},#{createTime},#{updateTime})
+    </insert>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -56,6 +73,14 @@
     from mmall_order
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectOrderByOrderNo" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from mmall_order
+    where order_no = #{orderNo,jdbcType=INTEGER}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from mmall_order
     where id = #{id,jdbcType=INTEGER}

@@ -12,11 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@Controller
+@RestController //@Controller+@ResponseBody
 @RequestMapping("/manage/user")
 public class UserManageController {
     @Autowired
@@ -25,14 +26,12 @@ public class UserManageController {
 
     //登录
     @RequestMapping("/login.do")
-    @ResponseBody
     public ServerResponse login(String username, String password, HttpSession session) {
         return userService.login(username, password, session);
     }
 
     //查看用户列表
     @RequestMapping("/list.do")
-    @ResponseBody
     public ServerResponse list(@RequestParam(value = "pageNum", defaultValue = "10") Integer pageNum,
                                @RequestParam(value = "pageSize", defaultValue = "1") Integer pageSize,
                                HttpSession session) {

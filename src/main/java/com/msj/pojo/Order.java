@@ -3,12 +3,15 @@ package com.msj.pojo;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Order {
     private Integer id;
 
-    private Long orderNo;
+    private BigInteger  orderNo;
 
     private Integer userId;
 
@@ -48,11 +51,11 @@ public class Order {
         this.id = id;
     }
 
-    public Long getOrderNo() {
+    public BigInteger getOrderNo() {
         return orderNo;
     }
 
-    public void setOrderNo(Long orderNo) {
+    public void setOrderNo(BigInteger  orderNo) {
         this.orderNo = orderNo;
     }
 
@@ -152,7 +155,7 @@ public class Order {
         this.updateTime = updateTime;
     }
 
-    private OrderItem orderItem;
+    private List<OrderItem> orderItemVoList;
 
     public String getPaymentTypeDesc() {
         return paymentTypeDesc;
@@ -170,12 +173,12 @@ public class Order {
         this.statusDesc = statusDesc;
     }
 
-    public OrderItem getOrderItem() {
-        return orderItem;
+    public List<OrderItem> getOrderItemVoList() {
+        return orderItemVoList;
     }
 
-    public void setOrderItem(OrderItem orderItem) {
-        this.orderItem = orderItem;
+    public void setOrderItemVoList(List<OrderItem> orderItemVoList) {
+        this.orderItemVoList = orderItemVoList;
     }
 
     public String getReceiveName() {

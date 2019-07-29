@@ -20,6 +20,10 @@ public interface CartMapper {
 
     Double selectCartTotalPriceByUserId(Integer userId);
 
+    List<Cart> selectByUidAndChecked(Integer userId);
+
+    int deleteByUidAndPid(Integer userId);
+
     List<CartProductVo> selectCartProduct(Integer userId);
 
     int deleteByProductId(Integer productId);

@@ -94,6 +94,17 @@
         where user_id = #{userId} and checked = 1
     </select>
 
+    <select id="selectByUidAndChecked" parameterType="int" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from mmall_cart
+        where user_id = #{userId} and checked = 1;
+    </select>
+
+    <delete id="deleteByUidAndPid" parameterType="map">
+        delete from mmall_cart
+        where user_id = #{userId} and checked = 1;
+    </delete>
+
     <select id="selectCartProduct" resultMap="CartProductMap">
         select c.id,c.user_id uid,c.product_id pid,c.quantity,c.checked,
         p.`name`,p.subtitle,p.main_image,p.price,p.`status`,p.stock
