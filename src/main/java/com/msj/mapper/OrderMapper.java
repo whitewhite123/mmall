@@ -13,7 +13,8 @@ public interface OrderMapper {
 
     Order selectOrderByUidAndOrderNo(@Param("userId") Integer userId,@Param("orderNo") BigInteger orderNo);
 
-    int updateStatusByUidAndOrderNo(@Param("userId") Integer userId,@Param("orderNo") BigInteger orderNo);
+    int updateStatusByOrderNo(@Param("status")Integer status,
+                                    @Param("orderNo") BigInteger orderNo);
 
     int addOrder(Order order);
 

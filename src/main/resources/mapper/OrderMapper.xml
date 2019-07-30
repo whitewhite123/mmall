@@ -54,10 +54,10 @@
       where user_id=#{userId} and order_no = #{orderNo}
   </select>
 
-    <update id="updateStatusByUidAndOrderNo" parameterType="map">
+    <update id="updateStatusByOrderNo" parameterType="map">
         update mmall_order
-        set status = 0
-        where user_id=#{userId} and order_no = #{orderNo}
+        set status = #{status}
+        where order_no = #{orderNo}
     </update>
 
     <insert id="addOrder" parameterType="map">

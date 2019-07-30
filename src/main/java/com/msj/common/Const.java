@@ -87,6 +87,8 @@ public class  Const {
 
 //    订单接口
     public static final String SEL_ORDER_ERROR = "没有订单，无法查询订单信息";
+    public static final String SEND_GOODS_SUCCESS = "发货成功";
+    public static final String SEND_GOODS_ERROR = "发货失败";
 
 //    支付接口
     public static final String SELECT_ORDER_ERROR = "没有找到订单";

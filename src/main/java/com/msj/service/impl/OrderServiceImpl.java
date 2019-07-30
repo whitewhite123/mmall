@@ -207,11 +207,49 @@ public class OrderServiceImpl implements OrderService{
         if(order.getStatus() >= 20 || order.getStatus() == 0){//已付款
             return ServerResponse.createByErrorMessage(Const.CANCEL_ORDER_ERROR);//已付款无法取消
         }
-        int resultCount = orderMapper.updateStatusByUidAndOrderNo(user.getId(),orderNo);
+        int status = 0;//取消订单
+        int resultCount = orderMapper.updateStatusByOrderNo(status,orderNo);
         if(resultCount < 0){
             return ServerResponse.createByErrorMessage(Const.CANCEL_ERROR);
         }
         return ServerResponse.createBySuccessMessage(Const.CANCEL_ORDER_SUCCESS);
+    }
+
+
+
+    //按订单号查询
+    public ServerResponse search(HttpSession session, BigInteger orderNo) {
+        //1、判断是否登录
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.GETINFORMATION_ERROR.getCode(),
+                    ResponseCode.NEED_LOGIN_ERROR.getDesc());//用户未登录
+        }
+        //2、根据orderNo进行查询
+        Order order = orderMapper.selectOrderByOrderNo(orderNo);
+        Integer userId = order.getUserId();
+        //3、整合order
+        order = assembleOrder(order, userId);
+        if(order == null){
+            return ServerResponse.createByErrorMessage(Const.SELECT_ORDER_ERROR);
+        }
+        return ServerResponse.createSuccess(order);
+    }
+
+    //订单发货
+    public ServerResponse sendGoods(HttpSession session, BigInteger orderNo) {
+        //1、判断是否登录
+        User user = (User)session.getAttribute("user");
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.GETINFORMATION_ERROR.getCode(),
+                    ResponseCode.NEED_LOGIN_ERROR.getDesc());//用户未登录
+        }
+        int status = 40;//已发货
+        int resultCount = orderMapper.updateStatusByOrderNo(status,orderNo);
+        if(resultCount < 0){
+            return ServerResponse.createByErrorMessage(Const.SEND_GOODS_ERROR);//发货失败
+        }
+        return ServerResponse.createByErrorMessage(Const.SEND_GOODS_SUCCESS);//发货成功
     }
 
 
@@ -260,6 +298,8 @@ public class OrderServiceImpl implements OrderService{
         }
         return orderList;
     }
+
+
 
 
     //支付
