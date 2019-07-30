@@ -97,4 +97,12 @@ public class  Const {
     public static final String CANCEL_ORDER_ERROR = "此订单已付款，无法被取消";
     public static final String CANCEL_ERROR = "订单取消失败";
     public static final String CANCEL_ORDER_SUCCESS = "成功取消订单";
+
+
+//    品类接口
+    public static final String SELECT_CATEGORY_ERROR = "未找到该品类";
+    public static final String ADD_CATEGORY_SUCCESS = "添加品类成功";
+    public static final String ADD_CATEGORY_ERROR = "添加品类失败";
+    public static final String UPDATE_CATEGORY_SUCCESS = "更新品类名字成功";
+    public static final String UPDATE_CATEGORY_ERROR = "更新品类名字失败";
 }

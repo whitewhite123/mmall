@@ -24,15 +24,16 @@
         <property name="dataSource" ref="dataSource"/>
         <!--引入xml映射文件-->
         <property name="mapperLocations">
-            <list>
-                <value>classpath:mapper/UserMapper.xml</value>
-                <value>classpath:mapper/ProductMapper.xml</value>
-                <value>classpath:mapper/CartMapper.xml</value>
-                <value>classpath:mapper/OrderMapper.xml</value>
-                <value>classpath:mapper/OrderItemMapper.xml</value>
-                <value>classpath:mapper/ShippingMapper.xml</value>
-                <value>classpath:mapper/StatisticMapper.xml</value>
-            </list>
+            <value>classpath:mapper/*</value>
+            <!--<list>-->
+                <!--<value>classpath:mapper/UserMapper.xml</value>-->
+                <!--<value>classpath:mapper/ProductMapper.xml</value>-->
+                <!--<value>classpath:mapper/CartMapper.xml</value>-->
+                <!--<value>classpath:mapper/OrderMapper.xml</value>-->
+                <!--<value>classpath:mapper/OrderItemMapper.xml</value>-->
+                <!--<value>classpath:mapper/ShippingMapper.xml</value>-->
+                <!--<value>classpath:mapper/StatisticMapper.xml</value>-->
+            <!--</list>-->
         </property>
         <property name="configLocation" value="classpath:mybatis.xml"/>
     </bean>
