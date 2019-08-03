@@ -97,6 +97,8 @@ public class  Const {
     public static final String CANCEL_ORDER_ERROR = "此订单已付款，无法被取消";
     public static final String CANCEL_ERROR = "订单取消失败";
     public static final String CANCEL_ORDER_SUCCESS = "成功取消订单";
+    public static final String CALLBACK_SUCCESS = "success";
+    public static final String CALLBACK_FAIL = "fail";
 
 
 //    品类接口

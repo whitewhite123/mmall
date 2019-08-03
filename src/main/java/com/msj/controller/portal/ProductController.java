@@ -23,7 +23,6 @@ public class ProductController {
     public ServerResponse list(Integer categoryId, @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                                @RequestParam(value = "pageSize", defaultValue = "10")Integer pageSize,
                                @RequestParam(value = "orderBy",defaultValue = "price_desc") String orderBy){
-        //todo 根据categoryId查询
         return productService.getProductList(pageNum,pageSize,categoryId,orderBy);
 
     }

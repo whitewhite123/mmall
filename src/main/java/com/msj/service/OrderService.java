@@ -19,7 +19,7 @@ public interface OrderService {
 
     ServerResponse pay(HttpSession session,BigInteger orderNo,HttpServletRequest request);
     ServerResponse queryOrderPayStatus(HttpSession session,BigInteger orderNo);
-    ServerResponse alipayCallback(HttpSession session, HttpServletRequest request);
+    String alipayCallback(HttpServletRequest request);
 
 
 }

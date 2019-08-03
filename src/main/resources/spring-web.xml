@@ -25,15 +25,6 @@
         <!--引入xml映射文件-->
         <property name="mapperLocations">
             <value>classpath:mapper/*</value>
-            <!--<list>-->
-                <!--<value>classpath:mapper/UserMapper.xml</value>-->
-                <!--<value>classpath:mapper/ProductMapper.xml</value>-->
-                <!--<value>classpath:mapper/CartMapper.xml</value>-->
-                <!--<value>classpath:mapper/OrderMapper.xml</value>-->
-                <!--<value>classpath:mapper/OrderItemMapper.xml</value>-->
-                <!--<value>classpath:mapper/ShippingMapper.xml</value>-->
-                <!--<value>classpath:mapper/StatisticMapper.xml</value>-->
-            <!--</list>-->
         </property>
         <property name="configLocation" value="classpath:mybatis.xml"/>
     </bean>
@@ -46,9 +37,17 @@
         <property name="basePackage" value="com.msj.mapper"/>
     </bean>
 
-
     <!--开启注解-->
     <mvc:annotation-driven/>
+
+    <!--上传文件-->
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+        <!--<property name="defaultEncoding" value="utf-8"/>-->
+        <!--&lt;!&ndash;最大内存大小&ndash;&gt;-->
+        <!--<property name="maxInMemorySize" value="10240"/>-->
+        <!--&lt;!&ndash;最大文件大小，-1为不限大小&ndash;&gt;-->
+        <!--<property name="maxUploadSize" value="-1"/>-->
+    <!--</bean>-->
 
 
 

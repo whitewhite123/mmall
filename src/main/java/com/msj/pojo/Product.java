@@ -1,6 +1,7 @@
 package com.msj.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.soap.Text;
 import java.math.BigDecimal;
@@ -26,6 +27,16 @@ public class Product {
     private Integer stock;
 
     private Integer status;
+
+    private MultipartFile file;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;

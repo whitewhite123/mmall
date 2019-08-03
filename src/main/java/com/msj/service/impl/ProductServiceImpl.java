@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -118,6 +120,9 @@ public class ProductServiceImpl implements ProductService{
 
     }
 
+    public ServerResponse upload(HttpServletRequest request) {
+        return null;
+    }
 
 
 }

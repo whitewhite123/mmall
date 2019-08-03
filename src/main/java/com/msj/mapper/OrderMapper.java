@@ -16,6 +16,8 @@ public interface OrderMapper {
     int updateStatusByOrderNo(@Param("status")Integer status,
                                     @Param("orderNo") BigInteger orderNo);
 
+    Order selectStatusByOrderNo(BigInteger orderNo);
+
     int addOrder(Order order);
 
     int deleteByPrimaryKey(Integer id);

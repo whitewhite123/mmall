@@ -8,11 +8,14 @@ import com.msj.pojo.Product;
 import com.msj.pojo.User;
 import com.msj.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -44,9 +47,9 @@ public class ProductManageController {
 
     @RequestMapping("/upload.do")
     @ResponseBody
-    public ServerResponse upload(){
+    public ServerResponse upload(HttpServletRequest request){
         //todo 图片上传
-        return null;
+        return productService.upload(request);
     }
 
     //产品详情
@@ -68,8 +71,6 @@ public class ProductManageController {
     @ResponseBody
     public ServerResponse save(Product product){
         return productService.save(product);
-
-
     }
 
 }

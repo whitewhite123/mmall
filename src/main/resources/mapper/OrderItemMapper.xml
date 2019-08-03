@@ -38,7 +38,7 @@
 
     <select id="selectOrderItemByUidAndOrderNo" resultMap="OrderItemMap" parameterType="map">
         select
-        <include refid="Order_Item_List"/>
+        <include refid="Base_Column_List"/>
         from mmall_order_item
         where user_id = #{userId} and order_no = #{orderNo}
     </select>

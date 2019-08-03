@@ -5,6 +5,7 @@ import com.msj.common.ServerResponse;
 import com.msj.pojo.Product;
 import org.apache.ibatis.annotations.Param;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.ws.spi.http.HttpContext;
 import java.util.List;
@@ -21,5 +22,6 @@ public interface ProductService {
     ServerResponse getDetail(Integer id,HttpSession session);
     ServerResponse setSaleStatus(Integer id,Integer status);
     ServerResponse save(Product product);
+    ServerResponse upload(HttpServletRequest request);
 
 }

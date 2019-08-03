@@ -76,8 +76,8 @@ public class OrderController {
     //支付宝回调
     @RequestMapping("/alipay_callback.do")
     @ResponseBody
-    public ServerResponse alipayCallback(HttpSession session, HttpServletRequest request){
-        return orderService.alipayCallback(session,request);
+    public String alipayCallback(HttpServletRequest request){
+        return orderService.alipayCallback(request);
     }
 }
 
